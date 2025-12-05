@@ -215,6 +215,62 @@ h3 {
     color: rgba(255, 255, 255, 0.5);
 }
 
+.social-media-group {
+    margin-bottom: 1rem;
+}
+
+.social-media-inputs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.social-platform-select {
+    flex: 0 0 140px;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.social-platform-select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.social-platform-select option {
+    background: #111;
+    color: #fff;
+}
+
+.social-handle-input {
+    flex: 1;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.social-handle-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.social-handle-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .submit-btn {
     width: 100%;
     padding: 0.75rem;
@@ -277,10 +333,45 @@ h3 {
     gap: 0.5rem;
 }
 
+.entry-name-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .entry-name {
     font-weight: 600;
     color: #fff;
     font-family: 'Share Tech Mono', monospace;
+}
+
+.entry-name-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.entry-name-link:hover {
+    opacity: 0.8;
+}
+
+.entry-name-link .entry-name {
+    color: inherit;
+}
+
+.website-icon {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.entry-name-link:hover .website-icon {
+    opacity: 1;
 }
 
 .entry-date {
@@ -293,6 +384,27 @@ h3 {
     line-height: 1.6;
     white-space: pre-wrap;
     word-wrap: break-word;
+}
+
+.social-icon-link {
+    display: inline-flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    opacity: 0.8;
+}
+
+.social-icon-link:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.social-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    display: block;
 }
 
 /* Responsive guestbook */
@@ -318,6 +430,15 @@ h3 {
         padding: 1rem;
     }
 
+    .social-media-inputs {
+        flex-direction: column;
+    }
+
+    .social-platform-select {
+        flex: 1;
+        width: 100%;
+    }
+
     .entry-header {
         flex-direction: column;
         align-items: flex-start;
@@ -336,6 +457,15 @@ h3 {
 
     .guestbook-form {
         padding: 0.75rem;
+    }
+
+    .social-media-inputs {
+        flex-direction: column;
+    }
+
+    .social-platform-select {
+        flex: 1;
+        width: 100%;
     }
 
     .entry {

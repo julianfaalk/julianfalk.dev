@@ -10,8 +10,11 @@ $message_type = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_entry'])) {
     $name = $_POST['name'] ?? '';
     $entry_message = $_POST['message'] ?? '';
+    $website = $_POST['website'] ?? null;
+    $social_media_platform = $_POST['social_media_platform'] ?? null;
+    $social_media_handle = $_POST['social_media_handle'] ?? null;
     
-    if (addGuestbookEntry($name, $entry_message)) {
+    if (addGuestbookEntry($name, $entry_message, $website, $social_media_platform, $social_media_handle)) {
         $message = 'Thank you for signing the guestbook!';
         $message_type = 'success';
         // Redirect to prevent resubmission on refresh
@@ -37,6 +40,28 @@ $entries = getGuestbookEntries();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const platformSelect = document.getElementById('social_media_platform');
+            const handleInput = document.getElementById('social_media_handle');
+            
+            if (platformSelect && handleInput) {
+                function updateHandleInput() {
+                    if (platformSelect.value) {
+                        handleInput.disabled = false;
+                        handleInput.placeholder = '@username';
+                    } else {
+                        handleInput.disabled = true;
+                        handleInput.value = '';
+                        handleInput.placeholder = '@username';
+                    }
+                }
+                
+                platformSelect.addEventListener('change', updateHandleInput);
+                updateHandleInput(); // Initialize on page load
+            }
+        });
+    </script>
 </head>
 
 <body>
@@ -61,6 +86,28 @@ $entries = getGuestbookEntries();
                     <label for="message">Message:</label>
                     <textarea id="message" name="message" required maxlength="1000" rows="4" placeholder="Leave a message..."></textarea>
                 </div>
+                <div class="form-group">
+                    <label for="website">Website (optional):</label>
+                    <input type="url" id="website" name="website" maxlength="255" placeholder="https://example.com">
+                </div>
+                <div class="form-group social-media-group">
+                    <label for="social_media_platform">Social Media (optional):</label>
+                    <div class="social-media-inputs">
+                        <select id="social_media_platform" name="social_media_platform" class="social-platform-select">
+                            <option value="">None</option>
+                            <option value="x">X (Twitter)</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="github">GitHub</option>
+                            <option value="linkedin">LinkedIn</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="tiktok">TikTok</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="reddit">Reddit</option>
+                            <option value="discord">Discord</option>
+                        </select>
+                        <input type="text" id="social_media_handle" name="social_media_handle" maxlength="100" placeholder="@username" class="social-handle-input">
+                    </div>
+                </div>
                 <button type="submit" name="submit_entry" class="submit-btn">Sign Guestbook</button>
             </form>
 
@@ -73,7 +120,25 @@ $entries = getGuestbookEntries();
                         <?php foreach ($entries as $entry): ?>
                             <div class="entry">
                                 <div class="entry-header">
-                                    <span class="entry-name"><?php echo htmlspecialchars($entry['name']); ?></span>
+                                    <div class="entry-name-section">
+                                        <?php if (!empty($entry['website'])): ?>
+                                            <a href="<?php echo htmlspecialchars($entry['website']); ?>" target="_blank" rel="noopener noreferrer" class="entry-name-link">
+                                                <span class="entry-name"><?php echo htmlspecialchars($entry['name']); ?></span>
+                                                <svg class="website-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 19H6c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h5c.55 0 1 .45 1 1s-.45 1-1 1H6v10h12v-5c0-.55.45-1 1-1s1 .45 1 1v5c0 1.1-.9 2-2 2zM14 4c0 .55.45 1 1 1h2.59l-9.13 9.13c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L19 6.41V9c0 .55.45 1 1 1s1-.45 1-1V4c0-.55-.45-1-1-1h-5c-.55 0-1 .45-1 1z"/></svg>
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="entry-name"><?php echo htmlspecialchars($entry['name']); ?></span>
+                                        <?php endif; ?>
+                                        <?php 
+                                        $social_url = getSocialMediaUrl($entry['social_media_platform'] ?? null, $entry['social_media_handle'] ?? null);
+                                        if ($social_url && !empty($entry['social_media_platform'])): 
+                                            $platform = strtolower($entry['social_media_platform']);
+                                        ?>
+                                            <a href="<?php echo htmlspecialchars($social_url); ?>" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="<?php echo htmlspecialchars(ucfirst($platform)); ?>">
+                                                <?php echo getSocialMediaIcon($platform); ?>
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
                                     <span class="entry-date"><?php echo formatDate($entry['created_at']); ?></span>
                                 </div>
                                 <div class="entry-message"><?php echo nl2br(htmlspecialchars($entry['message'])); ?></div>
