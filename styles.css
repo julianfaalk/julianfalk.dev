@@ -1,0 +1,124 @@
+body {
+    background: #111;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 300;
+    margin: 0;
+}
+
+.corner-box {
+    position: fixed;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 300;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    min-width: 140px;
+    max-width: 200px;
+    text-align: center;
+}
+
+.corner-box:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.counter {
+    bottom: 1.5rem;
+    right: 1.5rem;
+}
+
+.x-profile {
+    bottom: 1.5rem;
+    left: 1.5rem;
+}
+
+.x-profile a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.x-profile a:hover {
+    opacity: 0.8;
+}
+
+.x-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .corner-box {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+        min-width: 120px;
+        max-width: 160px;
+        bottom: 1rem;
+    }
+
+    .counter {
+        right: 1rem;
+    }
+
+    .x-profile {
+        left: 1rem;
+    }
+
+    .x-profile a {
+        gap: 0.3rem;
+    }
+
+    .x-icon {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .corner-box {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.75rem;
+        min-width: 100px;
+        max-width: 140px;
+        bottom: 0.75rem;
+    }
+
+    .counter {
+        right: 0.75rem;
+    }
+
+    .x-profile {
+        left: 0.75rem;
+    }
+
+}
+
