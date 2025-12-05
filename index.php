@@ -95,7 +95,7 @@ $entries = getGuestbookEntries();
                     <div class="social-media-inputs">
                         <select id="social_media_platform" name="social_media_platform" class="social-platform-select">
                             <option value="">None</option>
-                            <option value="x">X (Twitter)</option>
+                            <option value="x">X</option>
                             <option value="instagram">Instagram</option>
                             <option value="github">GitHub</option>
                             <option value="linkedin">LinkedIn</option>
