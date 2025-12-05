@@ -1,18 +1,61 @@
 <?php
-// Simple visitor counter function
+// Visitor counter function using SQLite database
+
 function getVisitorCount() {
-    // Use absolute path to ensure file is in the same directory as this script
-    $counter_file = __DIR__ . '/visitor_count.txt';
-    $dir = __DIR__;
+    // Include database functions
+    require_once __DIR__ . '/guestbook.php';
     
-    // Check if directory is writable
-    if (!is_writable($dir) && !is_writable(dirname($counter_file))) {
-        // If directory not writable, try using /tmp as fallback
-        $counter_file = sys_get_temp_dir() . '/julianfalk_dev_visitor_count.txt';
+    $db = getDB();
+    if (!$db) {
+        // Fallback: try to read from old text file if database fails
+        return getVisitorCountFromFile();
     }
     
-    // Read current count
+    try {
+        // Initialize counter if it doesn't exist
+        $stmt = $db->query("SELECT COUNT(*) FROM visitor_count");
+        if ($stmt->fetchColumn() == 0) {
+            // Migrate from text file if it exists
+            $old_count = getVisitorCountFromFile();
+            $db->exec("INSERT INTO visitor_count (id, count) VALUES (1, $old_count)");
+        }
+        
+        // Get current count and increment
+        $db->beginTransaction();
+        
+        $stmt = $db->prepare("SELECT count FROM visitor_count WHERE id = 1");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($result) {
+            $count = (int)$result['count'] + 1;
+        } else {
+            $count = 1;
+        }
+        
+        // Update count atomically
+        $stmt = $db->prepare("INSERT OR REPLACE INTO visitor_count (id, count, updated_at) VALUES (1, :count, CURRENT_TIMESTAMP)");
+        $stmt->bindValue(':count', $count, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $db->commit();
+        
+        return $count;
+    } catch (PDOException $e) {
+        error_log("Visitor counter DB Error: " . $e->getMessage());
+        if (isset($db) && $db->inTransaction()) {
+            $db->rollBack();
+        }
+        // Fallback to file-based counter
+        return getVisitorCountFromFile();
+    }
+}
+
+// Fallback function to read from text file (for migration/fallback)
+function getVisitorCountFromFile() {
+    $counter_file = __DIR__ . '/visitor_count.txt';
     $count = 0;
+    
     if (file_exists($counter_file)) {
         $content = @file_get_contents($counter_file);
         if ($content !== false) {
@@ -20,22 +63,11 @@ function getVisitorCount() {
         }
     }
     
-    // Increment count
     $count++;
     
-    // Write new count back to file
-    // Use LOCK_EX to prevent concurrent writes
-    $result = @file_put_contents($counter_file, $count, LOCK_EX);
+    // Try to update file (may fail if permissions are wrong, but that's ok)
+    @file_put_contents($counter_file, $count, LOCK_EX);
     
-    // If write failed, log error (but don't break the page)
-    if ($result === false) {
-        error_log("Visitor counter: Failed to write to $counter_file. Check file permissions.");
-    } else {
-        // Ensure file has correct permissions
-        @chmod($counter_file, 0666);
-    }
-    
-    // Return the count
     return $count;
 }
 ?>

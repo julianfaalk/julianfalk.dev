@@ -1,14 +1,14 @@
 <?php
-// Guestbook database functions using SQLite
+// Database functions using SQLite
 
-function getGuestbookDB() {
+function getDB() {
     $db_file = __DIR__ . '/julianfalk.dev.db';
     
     try {
         $db = new PDO('sqlite:' . $db_file);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        // Create table if it doesn't exist
+        // Create guestbook table if it doesn't exist
         $db->exec("CREATE TABLE IF NOT EXISTS entries (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
@@ -16,11 +16,23 @@ function getGuestbookDB() {
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )");
         
+        // Create visitor_count table if it doesn't exist
+        $db->exec("CREATE TABLE IF NOT EXISTS visitor_count (
+            id INTEGER PRIMARY KEY CHECK (id = 1),
+            count INTEGER NOT NULL DEFAULT 0,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )");
+        
         return $db;
     } catch (PDOException $e) {
-        error_log("Guestbook DB Error: " . $e->getMessage());
+        error_log("DB Error: " . $e->getMessage());
         return null;
     }
+}
+
+// Alias for backward compatibility
+function getGuestbookDB() {
+    return getDB();
 }
 
 function addGuestbookEntry($name, $message) {
