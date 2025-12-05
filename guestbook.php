@@ -2,7 +2,7 @@
 // Guestbook database functions using SQLite
 
 function getGuestbookDB() {
-    $db_file = __DIR__ . '/guestbook.db';
+    $db_file = __DIR__ . '/julianfalk.dev.db';
     
     try {
         $db = new PDO('sqlite:' . $db_file);

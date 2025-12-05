@@ -1,7 +1,5 @@
 body {
-    background: #111 url('assets/images/bg.jpg') center center no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+    background: #111;
     color: #fff;
     font-family: Arial, sans-serif;
     margin: 0;
