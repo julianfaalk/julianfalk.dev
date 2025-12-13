@@ -42,6 +42,14 @@ function getDB() {
             count INTEGER NOT NULL DEFAULT 0,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )");
+
+        // Create blog table if it doesn't exist
+        $db->exec("CREATE TABLE IF NOT EXISTS blog_posts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )");
         
         return $db;
     } catch (PDOException $e) {
@@ -165,6 +173,10 @@ function formatDate($datetime) {
     return date('M j, Y g:i A', strtotime($datetime));
 }
 
+function formatDateShort($datetime) {
+    return date('d M', strtotime($datetime));
+}
+
 function getSocialMediaIcon($platform) {
     $platform = strtolower($platform);
     $icons = [
@@ -199,4 +211,3 @@ function getSocialMediaIcon($platform) {
     return isset($icons[$platform]) ? $icons[$platform] : '';
 }
 ?>
-

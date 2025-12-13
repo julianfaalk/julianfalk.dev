@@ -151,6 +151,152 @@ h3 {
     margin: 0 auto;
 }
 
+.blog-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
+    color: #fff;
+    padding: 0 1rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.blog-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    padding-left: 1rem;
+}
+
+.year-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+}
+
+.year-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    flex: 1;
+}
+
+.blog-title-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.blog-title-link:hover {
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.blog-row {
+    display: block;
+    margin-left: -1.1rem;
+    padding-left: 1.1rem;
+}
+
+.blog-list {
+    gap: 0.35rem;
+    color: #fff;
+}
+
+.blog-list-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.blog-date-inline {
+    width: 70px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+}
+
+.blog-content {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.blog-back-link {
+    margin-top: 1rem;
+}
+
+.blog-back-link a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.blog-back-link a:hover {
+    text-decoration: underline;
+}
+
+.blog-single {
+    max-width: 760px;
+    margin: 0 auto 2rem auto;
+    padding: 0 1rem;
+    color: #fff;
+}
+
+.single-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+}
+
+.single-site {
+    color: #4da3ff;
+    font-weight: 700;
+}
+
+.single-title {
+    margin: 0 0 1.5rem 0;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.single-body {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.blog-form {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.blog-form .help-text {
+    margin: 0.35rem 0 0 0;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
 .message {
     padding: 1rem;
     margin-bottom: 1.5rem;
@@ -413,6 +559,20 @@ h3 {
         padding: 1.5rem 1rem;
     }
 
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .blog-year {
+        flex-direction: column;
+    }
+
+    .year-label {
+        min-width: 0;
+    }
+
     h1 {
         font-size: 2rem;
         margin-bottom: 2rem;
@@ -472,4 +632,3 @@ h3 {
         padding: 0.75rem;
     }
 }
-
