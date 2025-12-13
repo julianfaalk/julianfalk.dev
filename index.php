@@ -76,7 +76,7 @@ $blog_posts_by_year = getBlogPostsByYear();
 
 <body class="<?php echo $is_single_post_view ? 'single-view' : ''; ?>">
     <div class="main-content">
-        <h1>julianfalk.dev</h1>
+        <h1><a class="site-title-link" href="/#blog">julianfalk.dev</a></h1>
 
         <div class="blog-section" id="blog">
             <!-- <div class="section-header">
@@ -86,12 +86,16 @@ $blog_posts_by_year = getBlogPostsByYear();
 
             <?php if ($is_single_post_view): ?>
                 <?php if ($single_post): ?>
+                    <?php $single_slug = slugifyTitle($single_post['title']); ?>
                     <article class="blog-single">
-                        <div class="single-meta">
-                            <span class="single-site">julianfalk.dev</span>
+                        <div class="single-header">
+                            <h1 class="single-title">
+                                <a class="single-title-link" href="/blog/<?php echo htmlspecialchars($single_slug); ?>">
+                                    <?php echo htmlspecialchars($single_post['title']); ?>
+                                </a>
+                            </h1>
                             <span class="single-date"><?php echo formatDateDateOnly($single_post['created_at']); ?></span>
                         </div>
-                        <h1 class="single-title"><?php echo htmlspecialchars($single_post['title']); ?></h1>
                         <?php if (!empty($single_post['image_url'])): ?>
                             <div class="single-hero">
                                 <img src="<?php echo htmlspecialchars($single_post['image_url']); ?>" alt="<?php echo htmlspecialchars($single_post['title']); ?>">
