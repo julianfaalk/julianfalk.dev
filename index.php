@@ -155,7 +155,7 @@ $blog_posts_by_year = getBlogPostsByYear();
 
             <div class="newsletter-card <?php echo $subscription_message_type === 'welcome' ? 'welcome' : ''; ?>" id="newsletter">
                 <div class="newsletter-copy">
-                    <h3>Join my super awesome newsletter 📧</h3>
+                    <h3>Subscribe to my super awesome newsletter 📧</h3>
                     </br>
                 </div>
 

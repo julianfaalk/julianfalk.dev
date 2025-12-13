@@ -19,6 +19,19 @@
   addBlogPost('Your Title', 'Body text here');
   ```
 
+## Newsletter signup (double opt-in)
+
+- The subscription form stores requests in `julianfalk.dev.db` (`newsletter_subscriptions` table) and sends a confirmation email with a 1-hour token.
+- Configure Mailgun via `.env` (file is gitignored):
+  ```
+  MAILGUN_API_KEY=...        # rotate if ever committed
+  MAILGUN_DOMAIN=...
+  MAILGUN_FROM="Name <postmaster@your-domain>"
+  MAILGUN_API_BASE=https://api.eu.mailgun.net/v3   # or https://api.mailgun.net/v3
+  APP_URL=https://www.julianfalk.dev               # public base for confirm links
+  ```
+- After confirmation (`/?confirm_subscription=TOKEN`), status flips to `confirmed` and the token is cleared.
+
 Notes:
 - Everything is stored in `julianfalk.dev.db` (SQLite).
-- There is no admin UI enabled, so DB/CLI is the current path for publishing.***
+- There is no admin UI enabled, so DB/CLI is the current path for publishing.
