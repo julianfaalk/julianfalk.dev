@@ -184,6 +184,12 @@ h3 {
 
     .blog-row {
         gap: 1rem;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .blog-list {
+        padding-left: 0;
     }
 }
 
@@ -202,6 +208,22 @@ h3 {
     background: transparent;
     box-shadow: none;
     padding: 0 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .single-view .blog-section {
+        padding: 0 1rem;
+        max-width: 100%;
+    }
+
+    .single-view .single-title {
+        font-size: 2.2rem;
+        line-height: 1.25;
+    }
+
+    .single-view .single-body {
+        font-size: 1.08rem;
+    }
 }
 
 .section-header {
@@ -287,6 +309,7 @@ h3 {
     color: rgba(255, 255, 255, 0.92);
     line-height: 1.8;
     white-space: normal;
+    word-break: break-word;
 }
 
 .blog-content p {
