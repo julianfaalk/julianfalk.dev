@@ -1,13 +1,31 @@
 <?php
 // Include counter and get visitor count
+require_once 'env.php';
+loadEnvFile(__DIR__ . '/.env');
 require_once 'counter.php';
 require_once 'guestbook.php';
 require_once 'blog.php';
+require_once 'newsletter.php';
 $visitor_count = getVisitorCount();
 
 // Handle guestbook form submission
 $message = '';
 $message_type = '';
+$subscription_message = '';
+$subscription_message_type = '';
+
+if (isset($_GET['confirm_subscription'])) {
+    $confirmation = confirmNewsletterSubscription($_GET['confirm_subscription']);
+    $subscription_message = $confirmation['message'];
+    $subscription_message_type = $confirmation['success'] ? 'welcome' : 'error';
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe_newsletter'])) {
+    $email = $_POST['subscriber_email'] ?? '';
+    $subscription = requestNewsletterSubscription($email);
+    $subscription_message = $subscription['message'];
+    $subscription_message_type = $subscription['success'] ? 'success' : 'error';
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_entry'])) {
     $name = $_POST['name'] ?? '';
@@ -132,6 +150,25 @@ $blog_posts_by_year = getBlogPostsByYear();
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
+
+            <div class="newsletter-card <?php echo $subscription_message_type === 'welcome' ? 'welcome' : ''; ?>" id="newsletter">
+                <div class="newsletter-copy">
+                    <h3>Get the releases</h3>
+                    <p>Emails only when something worth your time ships.</p>
+                </div>
+
+                <?php if ($subscription_message): ?>
+                    <div class="message <?php echo htmlspecialchars($subscription_message_type ?: 'success'); ?> <?php echo $subscription_message_type === 'welcome' ? 'welcome-message' : ''; ?>">
+                        <?php echo htmlspecialchars($subscription_message); ?>
+                    </div>
+                <?php endif; ?>
+
+                <form method="POST" class="newsletter-form">
+                    <input type="email" name="subscriber_email" class="newsletter-input" placeholder="your@email.com" required>
+                    <button type="submit" name="subscribe_newsletter" class="newsletter-submit">Subscribe newsletter</button>
+                </form>
+                <p class="newsletter-hint">You will get a confirmation link (valid for 1 hour).</p>
+            </div>
         </div>
 
         <?php if (!$is_single_post_view): ?>

@@ -440,6 +440,104 @@ h3 {
     color: #4da3ff;
 }
 
+.newsletter-card {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.newsletter-card.welcome {
+    box-shadow: 0 0 30px rgba(11, 130, 240, 0.35);
+    animation: welcomeGlow 1.8s ease-in-out 1;
+}
+
+.newsletter-copy h3 {
+    margin: 0 0 0.3rem 0;
+}
+
+.newsletter-copy p {
+    margin: 0 0 1rem 0;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 0;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.newsletter-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.9rem 1rem;
+    background: transparent;
+    border: 1px solid #fff;
+    border-radius: 5px 0 0 5px;
+    color: #fff;
+    font-size: 1rem;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.newsletter-submit {
+    padding: 0.9rem 1.2rem;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid #fff;
+    border-left: none;
+    background: #fff;
+    color: #000;
+    font-weight: 700;
+    font-family: 'Share Tech Mono', monospace;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+}
+
+.newsletter-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
+}
+
+.newsletter-submit:active {
+    transform: translateY(0);
+}
+
+.newsletter-hint {
+    margin: 0.75rem 0 0 0;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.message.welcome {
+    background: rgba(11, 130, 240, 0.15);
+    border: 1px solid rgba(11, 130, 240, 0.5);
+    color: #9ecbff;
+}
+
+.welcome-message {
+    animation: welcomeGlow 1.2s ease-in-out 2;
+}
+
+@keyframes welcomeGlow {
+    0% {
+        box-shadow: 0 0 0 rgba(11, 130, 240, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 32px rgba(11, 130, 240, 0.35);
+    }
+    100% {
+        box-shadow: 0 0 0 rgba(11, 130, 240, 0.2);
+    }
+}
+
 .blog-form {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -760,6 +858,21 @@ h3 {
     .entry-header {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+    }
+
+    .newsletter-submit {
+        width: 100%;
+        text-align: center;
+        border-left: 1px solid #fff;
+        border-radius: 0 0 5px 5px;
+    }
+
+    .newsletter-input {
+        border-radius: 5px 5px 0 0;
     }
 }
 
