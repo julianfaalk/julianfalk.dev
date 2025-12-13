@@ -17,8 +17,16 @@ function ensureBlogTable($db) {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         content TEXT NOT NULL,
+        image_url TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )");
+
+    // Add image_url if it was missing previously
+    try {
+        $db->exec("ALTER TABLE blog_posts ADD COLUMN image_url TEXT");
+    } catch (PDOException $e) {
+        // Column already exists; safe to ignore
+    }
 }
 
 function getBlogPostsByYear() {
@@ -29,7 +37,7 @@ function getBlogPostsByYear() {
 
     try {
         ensureBlogTable($db);
-        $stmt = $db->query("SELECT id, title, content, created_at FROM blog_posts ORDER BY created_at DESC");
+        $stmt = $db->query("SELECT id, title, content, image_url, created_at FROM blog_posts ORDER BY created_at DESC");
         $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $grouped = [];
@@ -56,7 +64,7 @@ function getBlogPostBySlug($slug) {
 
     try {
         ensureBlogTable($db);
-        $stmt = $db->query("SELECT id, title, content, created_at FROM blog_posts");
+        $stmt = $db->query("SELECT id, title, content, image_url, created_at FROM blog_posts");
 
         while ($post = $stmt->fetch(PDO::FETCH_ASSOC)) {
             if (slugifyTitle($post['title']) === $slug) {
@@ -126,4 +134,37 @@ function isBlogAdmin() {
     }
 
     return false;
+}
+
+function formatContentHtml($content) {
+    $paragraphs = preg_split('/\\R{2,}/', trim($content));
+    $html = '';
+
+    foreach ($paragraphs as $para) {
+        $para = trim($para);
+        if ($para === '') {
+            continue;
+        }
+        $placeholders = [];
+        $idx = 0;
+
+        // Convert markdown-style images ![alt](src) into HTML while escaping the rest
+        $para = preg_replace_callback('/!\\[([^\\]]*)\\]\\(([^)]+)\\)/', function ($m) use (&$placeholders, &$idx) {
+            $key = "%%IMG{$idx}%%";
+            $src = htmlspecialchars($m[2], ENT_QUOTES, 'UTF-8');
+            $alt = htmlspecialchars($m[1], ENT_QUOTES, 'UTF-8');
+            $placeholders[$key] = '<img src="' . $src . '" alt="' . $alt . '" class="inline-image">';
+            $idx++;
+            return $key;
+        }, $para);
+
+        $escaped = nl2br(htmlspecialchars($para, ENT_QUOTES, 'UTF-8'));
+        if (!empty($placeholders)) {
+            $escaped = str_replace(array_keys($placeholders), array_values($placeholders), $escaped);
+        }
+
+        $html .= '<p>' . $escaped . '</p>';
+    }
+
+    return $html;
 }

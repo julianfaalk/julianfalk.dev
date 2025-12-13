@@ -173,6 +173,10 @@ function formatDate($datetime) {
     return date('M j, Y g:i A', strtotime($datetime));
 }
 
+function formatDateDateOnly($datetime) {
+    return date('M j, Y', strtotime($datetime));
+}
+
 function formatDateShort($datetime) {
     return date('d M', strtotime($datetime));
 }

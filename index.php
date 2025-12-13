@@ -52,31 +52,29 @@ $blog_posts_by_year = getBlogPostsByYear();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style><?php echo file_get_contents(__DIR__ . '/styles.css'); ?></style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-7VpQ3zPpKXb88GJEqn3m0w6bR5Yh5D5yE6q3Y9KXhDQ=" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const platformSelect = document.getElementById('social_media_platform');
-            const handleInput = document.getElementById('social_media_handle');
+        $(function () {
+            var $platformSelect = $('#social_media_platform');
+            var $handleInput = $('#social_media_handle');
 
-            if (platformSelect && handleInput) {
-                function updateHandleInput() {
-                    if (platformSelect.value) {
-                        handleInput.disabled = false;
-                        handleInput.placeholder = '@username';
-                    } else {
-                        handleInput.disabled = true;
-                        handleInput.value = '';
-                        handleInput.placeholder = '@username';
-                    }
+            function updateHandleInput() {
+                if ($platformSelect.val()) {
+                    $handleInput.prop('disabled', false).attr('placeholder', '@username');
+                } else {
+                    $handleInput.prop('disabled', true).val('').attr('placeholder', '@username');
                 }
+            }
 
-                platformSelect.addEventListener('change', updateHandleInput);
+            if ($platformSelect.length && $handleInput.length) {
+                $platformSelect.on('change', updateHandleInput);
                 updateHandleInput(); // Initialize on page load
             }
         });
     </script>
 </head>
 
-<body>
+<body class="<?php echo $is_single_post_view ? 'single-view' : ''; ?>">
     <div class="main-content">
         <h1>julianfalk.dev</h1>
 
@@ -91,10 +89,15 @@ $blog_posts_by_year = getBlogPostsByYear();
                     <article class="blog-single">
                         <div class="single-meta">
                             <span class="single-site">julianfalk.dev</span>
-                            <span class="single-date"><?php echo formatDate($single_post['created_at']); ?></span>
+                            <span class="single-date"><?php echo formatDateDateOnly($single_post['created_at']); ?></span>
                         </div>
                         <h1 class="single-title"><?php echo htmlspecialchars($single_post['title']); ?></h1>
-                        <div class="blog-content single-body"><?php echo nl2br(htmlspecialchars($single_post['content'])); ?></div>
+                        <?php if (!empty($single_post['image_url'])): ?>
+                            <div class="single-hero">
+                                <img src="<?php echo htmlspecialchars($single_post['image_url']); ?>" alt="<?php echo htmlspecialchars($single_post['title']); ?>">
+                            </div>
+                        <?php endif; ?>
+                        <div class="blog-content single-body"><?php echo formatContentHtml($single_post['content']); ?></div>
                         <div class="blog-back-link">
                             <a href="/#blog">← Back to all posts</a>
                         </div>

@@ -153,10 +153,55 @@ h3 {
 
 .blog-section {
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto 3rem auto;
     color: #fff;
-    padding: 0 1rem;
+    padding: 2rem 1.5rem;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+@media (max-width: 768px) {
+    .blog-section {
+        padding: 1.25rem 1rem;
+        max-width: 100%;
+        box-shadow: none;
+    }
+
+    .year-label {
+        font-size: 1.4rem;
+    }
+
+    .blog-title-link {
+        font-size: 1.15rem;
+    }
+
+    .blog-date-inline {
+        width: 64px;
+        font-size: 0.98rem;
+    }
+
+    .blog-row {
+        gap: 1rem;
+    }
+}
+
+.single-view {
+    background: #111;
+    color: #fff;
+}
+
+.single-view .main-content {
+    align-items: stretch;
+}
+
+.single-view .blog-section {
+    max-width: 900px;
+    margin-top: 1.5rem;
+    background: transparent;
+    box-shadow: none;
+    padding: 0 1.25rem;
 }
 
 .section-header {
@@ -171,34 +216,42 @@ h3 {
     color: rgba(255, 255, 255, 0.7);
 }
 
+.single-view .section-subtitle {
+    color: rgba(255, 255, 255, 0.65);
+}
+
 .blog-timeline {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.3rem;
     margin-bottom: 2rem;
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
-    padding-left: 1rem;
 }
 
 .year-label {
     font-family: 'Share Tech Mono', monospace;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.8);
+    color: #fff;
+    font-size: 1.6rem;
     margin-bottom: 0.5rem;
+    min-width: 70px;
 }
 
 .year-posts {
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.75rem;
     flex: 1;
 }
 
 .blog-title-link {
-    color: #fff;
+    color: #0b82f0;
     text-decoration: none;
-    font-size: 1rem;
-    font-weight: 400;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.single-view .blog-title-link {
+    color: #1e88e5;
 }
 
 .blog-title-link:hover {
@@ -207,13 +260,13 @@ h3 {
 }
 
 .blog-row {
-    display: block;
-    margin-left: -1.1rem;
-    padding-left: 1.1rem;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
 }
 
 .blog-list {
-    gap: 0.35rem;
+    gap: 0.7rem;
     color: #fff;
 }
 
@@ -224,15 +277,37 @@ h3 {
 }
 
 .blog-date-inline {
-    width: 70px;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.95rem;
+    width: 75px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.05rem;
+    font-weight: 500;
 }
 
 .blog-content {
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.7;
-    white-space: pre-wrap;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.8;
+    white-space: normal;
+}
+
+.blog-content p {
+    margin: 0 0 1.3rem 0;
+}
+
+.single-view .blog-content {
+    color: #ddd;
+    line-height: 1.8;
+}
+
+.single-view .blog-content a {
+    color: #4da3ff;
+}
+
+.inline-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+    border-radius: 8px;
 }
 
 .blog-back-link {
@@ -250,10 +325,32 @@ h3 {
 }
 
 .blog-single {
-    max-width: 760px;
+    max-width: 720px;
     margin: 0 auto 2rem auto;
     padding: 0 1rem;
     color: #fff;
+}
+
+.single-view .blog-single {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    color: #fff;
+}
+
+.single-hero {
+    margin: 0 0 1.25rem 0;
+    text-align: center;
+}
+
+.single-hero img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
 }
 
 .single-meta {
@@ -270,16 +367,40 @@ h3 {
     font-weight: 700;
 }
 
+.single-view .single-meta {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+.single-view .single-site {
+    color: #4da3ff;
+}
+
 .single-title {
     margin: 0 0 1.5rem 0;
-    font-size: 2.5rem;
+    font-size: 2.6rem;
     line-height: 1.2;
     font-weight: 700;
 }
 
 .single-body {
-    font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.94);
+}
+
+.single-view .single-title {
+    color: #fff;
+    font-size: 2.6rem;
+    line-height: 1.3;
+}
+
+.single-view .single-body {
+    font-size: 1.18rem;
+    color: #ddd;
+}
+
+.single-view .blog-back-link a {
+    color: #4da3ff;
 }
 
 .blog-form {
