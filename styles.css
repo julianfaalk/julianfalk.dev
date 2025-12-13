@@ -322,6 +322,7 @@ h3 {
     color: rgba(255, 255, 255, 0.75);
     font-size: 1.05rem;
     font-weight: 500;
+    font-style: italic;
 }
 
 .blog-content {
@@ -418,6 +419,12 @@ h3 {
 
 .single-title-link:hover {
     text-decoration: underline;
+}
+
+.single-date {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
 }
 
 .single-body {
