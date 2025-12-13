@@ -69,8 +69,10 @@ $blog_posts_by_year = getBlogPostsByYear();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style><?php echo file_get_contents(__DIR__ . '/styles.css'); ?></style>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-7VpQ3zPpKXb88GJEqn3m0w6bR5Yh5D5yE6q3Y9KXhDQ=" crossorigin="anonymous"></script>
+    <style>
+        <?php echo file_get_contents(__DIR__ . '/styles.css'); ?>
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(function () {
             var $platformSelect = $('#social_media_platform');
@@ -153,8 +155,8 @@ $blog_posts_by_year = getBlogPostsByYear();
 
             <div class="newsletter-card <?php echo $subscription_message_type === 'welcome' ? 'welcome' : ''; ?>" id="newsletter">
                 <div class="newsletter-copy">
-                    <h3>Get the releases</h3>
-                    <p>Emails only when something worth your time ships.</p>
+                    <h3>Join my super awesome newsletter 📧</h3>
+                    </br>
                 </div>
 
                 <?php if ($subscription_message): ?>
@@ -165,9 +167,9 @@ $blog_posts_by_year = getBlogPostsByYear();
 
                 <form method="POST" class="newsletter-form">
                     <input type="email" name="subscriber_email" class="newsletter-input" placeholder="your@email.com" required>
-                    <button type="submit" name="subscribe_newsletter" class="newsletter-submit">Subscribe newsletter</button>
+                    <button type="submit" name="subscribe_newsletter" class="newsletter-submit">Subscribe</button>
                 </form>
-                <p class="newsletter-hint">You will get a confirmation link (valid for 1 hour).</p>
+                <!-- <p class="newsletter-hint">You will get a confirmation link (valid for 1 hour).</p> -->
             </div>
         </div>
 
