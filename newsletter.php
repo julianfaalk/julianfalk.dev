@@ -43,15 +43,21 @@ function buildSubscriptionConfirmUrl($token)
 
 function sendSubscriptionEmail($email, $token, $expiresAt)
 {
-    $apiKey = getenv('MAILGUN_API_KEY') ?: '';
-    $domain = getenv('MAILGUN_DOMAIN') ?: '';
-    $from = getenv('MAILGUN_FROM') ?: 'Julian Falk <newsletter@julianfalk.dev>';
-    $apiBase = getenv('MAILGUN_API_BASE') ?: 'https://api.mailgun.net/v3';
+    $apiKey = getenv('MAILGUN_API_KEY');
+    $domain = getenv('MAILGUN_DOMAIN');
+    $from = getenv('MAILGUN_FROM');
+    $apiBase = getenv('MAILGUN_API_BASE');
 
     if (empty($apiKey) || empty($domain)) {
         error_log("Mailgun config missing: ensure MAILGUN_API_KEY and MAILGUN_DOMAIN are set.");
         return false;
     }
+
+    // Debug logging (remove after fixing)
+    error_log("API Key length: " . strlen($apiKey) . " chars");
+    error_log("Domain: " . $domain);
+    error_log("API Base: " . $apiBase);
+    error_log("From: " . $from);
 
     $confirmUrl = buildSubscriptionConfirmUrl($token);
     $subject = 'Confirm your julianfalk.dev newsletter subscription';
@@ -90,7 +96,9 @@ function sendSubscriptionEmail($email, $token, $expiresAt)
     ];
 
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, rtrim($apiBase, '/') . '/' . $domain . '/messages');
+    $apiUrl = rtrim($apiBase, '/') . '/' . $domain . '/messages';
+    error_log("Attempting Mailgun API call to: $apiUrl");
+    curl_setopt($ch, CURLOPT_URL, $apiUrl);
     curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
     curl_setopt($ch, CURLOPT_USERPWD, 'api:' . $apiKey);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -107,7 +115,14 @@ function sendSubscriptionEmail($email, $token, $expiresAt)
     }
 
     curl_close($ch);
-    return $httpCode >= 200 && $httpCode < 300;
+
+    $success = $httpCode >= 200 && $httpCode < 300;
+
+    if (!$success) {
+        error_log("Mailgun API error (HTTP $httpCode): " . $response);
+    }
+
+    return $success;
 }
 
 function requestNewsletterSubscription($email)

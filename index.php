@@ -23,8 +23,27 @@ if (isset($_GET['confirm_subscription'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe_newsletter'])) {
     $email = $_POST['subscriber_email'] ?? '';
     $subscription = requestNewsletterSubscription($email);
-    $subscription_message = $subscription['message'];
-    $subscription_message_type = $subscription['success'] ? 'success' : 'error';
+
+    // Store message in session and redirect to prevent resubmission on refresh
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $_SESSION['subscription_message'] = $subscription['message'];
+    $_SESSION['subscription_message_type'] = $subscription['success'] ? 'success' : 'error';
+
+    header('Location: ' . $_SERVER['PHP_SELF'] . '#newsletter');
+    exit;
+}
+
+// Check for subscription message from session (after redirect)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION['subscription_message'])) {
+    $subscription_message = $_SESSION['subscription_message'];
+    $subscription_message_type = $_SESSION['subscription_message_type'];
+    unset($_SESSION['subscription_message']);
+    unset($_SESSION['subscription_message_type']);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_entry'])) {

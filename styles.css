@@ -228,7 +228,7 @@ h3 {
     }
 
     .single-view .single-body {
-        font-size: 1.08rem;
+        font-size: 1.3rem;
     }
 }
 
@@ -439,7 +439,7 @@ h3 {
 }
 
 .single-view .single-body {
-    font-size: 1.18rem;
+    font-size: 1.3rem;
     color: #ddd;
 }
 
@@ -448,7 +448,7 @@ h3 {
 }
 
 .newsletter-card {
-    margin-top: 2rem;
+    margin: 2rem 0 2.5rem 0;
     padding: 1.5rem;
     border: none;
     border-radius: 8px;
@@ -456,11 +456,19 @@ h3 {
     backdrop-filter: blur(8px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .newsletter-card.welcome {
     box-shadow: 0 0 30px rgba(11, 130, 240, 0.35);
     animation: welcomeGlow 1.8s ease-in-out 1;
+}
+
+.newsletter-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
 }
 
 .newsletter-copy h3 {
@@ -474,9 +482,9 @@ h3 {
 
 .newsletter-form {
     display: flex;
-    gap: 0;
-    margin-top: 0.5rem;
-    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    flex-wrap: nowrap;
     width: 100%;
 }
 
@@ -507,7 +515,7 @@ h3 {
     font-weight: 700;
     font-family: 'Share Tech Mono', monospace;
     font-size: 1.05rem;
-    min-width: 160px;
+    min-width: 170px;
     flex: 0 0 auto;
     cursor: pointer;
     transition: transform 0.1s ease, box-shadow 0.2s ease;
@@ -524,7 +532,7 @@ h3 {
 }
 
 .newsletter-hint {
-    margin: 0.75rem 0 0 0;
+    margin: 0.9rem 0 0 0;
     color: rgba(255, 255, 255, 0.6);
     font-size: 0.9rem;
 }
@@ -875,7 +883,7 @@ h3 {
 
     .newsletter-form {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.6rem;
     }
 
     .newsletter-submit {
@@ -889,6 +897,11 @@ h3 {
     .newsletter-input {
         border-radius: 5px 5px 0 0;
         width: 100%;
+    }
+
+    .newsletter-card {
+        padding: 1.2rem;
+        margin: 1.5rem 0 2rem 0;
     }
 }
 
@@ -904,6 +917,11 @@ h3 {
 
     .guestbook-form {
         padding: 0.75rem;
+    }
+
+    .newsletter-card {
+        padding: 1rem;
+        margin: 1.25rem 0 1.75rem 0;
     }
 
     .social-media-inputs {
