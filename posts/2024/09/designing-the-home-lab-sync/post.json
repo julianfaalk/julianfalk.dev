@@ -1,5 +1,0 @@
-{
-    "title": "Designing the home lab sync",
-    "created_at": "2024-09-03 08:30:00",
-    "content": "<p>I rebuilt my home lab sync so that laptops and the edge box share a common playbook. Everything lives in plain shell scripts, rsync, and a small JSON manifest that lists which folders are authoritative.</p>\n\n<p>The manifest is the only source of truth: it defines what to pull, what to push, and which exclusions to honor. Because it is human-readable, I can adjust priorities on the fly without touching code.</p>\n\n<p>This setup makes disaster recovery boring. If a disk dies, I bootstrap a fresh node, feed it the manifest, and watch it rebuild state with predictable, observable steps.</p>"
-}

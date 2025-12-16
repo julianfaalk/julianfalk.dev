@@ -1,5 +1,0 @@
-{
-    "title": "Keeping SQLite happy on servers",
-    "created_at": "2024-02-15 07:55:00",
-    "content": "<p>SQLite likes predictable writes, so I batch non-critical updates and keep journaling in WAL mode. Backups are just file copies with a short lock, then rsync to cold storage.</p>\n\n<p>I monitor for long-running queries with a tiny cron job that dumps `sqlite3` stats to a text file. Anything suspicious gets fixed before it becomes a problem.</p>\n\n<p>This approach keeps the stack small: no external DB to babysit, no migrations waiting for a window. Just a single file that moves with the code.</p>"
-}

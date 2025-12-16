@@ -1,5 +1,0 @@
-{
-    "title": "First tiny product",
-    "created_at": "2021-10-22 09:00:00",
-    "content": "<p>I shipped my first tiny product: a single-page tool with one button and one outcome. The goal was to practice charging money, not building a platform.</p>\n\n<p>Payment flow used Stripe Checkout, state lived in SQLite, and emails were plain text. Users appreciated the focus; I appreciated learning the full loop in days instead of months.</p>\n\n<p>That win set the tone for future releases: small, paid, and shippable.</p>"
-}

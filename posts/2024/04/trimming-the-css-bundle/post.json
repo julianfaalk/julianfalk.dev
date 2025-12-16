@@ -1,5 +1,0 @@
-{
-    "title": "Trimming the CSS bundle",
-    "created_at": "2024-04-09 11:20:00",
-    "content": "<p>I cut the CSS bundle by deleting unused selectors and collapsing variations into tokens. No preprocessors just consistent naming and a short list of utility classes I actually use.</p>\n\n<p>The payoff shows up in first paint: fewer bytes over the wire and less render thrash. Debugging also sped up because every selector I see in devtools now maps to something intentional.</p>\n\n<p>Keeping styles small encourages me to design with restraint. Components look related, spacing stays coherent, and the dark/light modes stay in sync.</p>"
-}

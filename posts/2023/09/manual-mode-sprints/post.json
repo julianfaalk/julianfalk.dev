@@ -1,5 +1,0 @@
-{
-    "title": "Manual mode sprints",
-    "created_at": "2023-09-14 16:25:00",
-    "content": "<p>For one quarter I ran in manual mode: no CI, no CD, just deliberate local builds and hand-crafted deploys. It forced me to tighten scripts and make rollbacks trivial.</p>\n\n<p>The experiment exposed brittle spots places where I relied on automation to hide complexity. By fixing those, the automated path later became faster and safer.</p>\n\n<p>Manual mode also reminded me to document every step. That log is now the on-call runbook.</p>"
-}

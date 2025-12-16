@@ -1,5 +1,0 @@
-{
-    "title": "The season of deletes",
-    "created_at": "2022-02-10 18:05:00",
-    "content": "<p>I deleted legacy routes, stale assets, and abandoned experiments. Each delete simplified routing, reduced bundle size, and removed code paths from on-call.</p>\n\n<p>The codebase feels lighter. Less to secure, less to migrate, and fewer surprises when adding new features.</p>\n\n<p>Deletion is a feature: it buys time and attention for the parts that matter.</p>"
-}

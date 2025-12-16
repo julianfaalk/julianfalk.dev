@@ -1,5 +1,0 @@
-{
-    "title": "A year of no dashboards",
-    "created_at": "2023-12-05 13:10:00",
-    "content": "<p>I removed most dashboards and replaced them with daily text summaries. The summaries highlight only deltas: signups, errors, deploys, and cash. No charts to babysit, just the facts.</p>\n\n<p>This change reduced the urge to chase noise. When something important moves, it shows up in the text and I act. Otherwise, I keep building.</p>\n\n<p>Less screen time on dashboards freed hours each week for actual work, and the codebase is healthier because I am not optimizing for vanity metrics.</p>"
-}

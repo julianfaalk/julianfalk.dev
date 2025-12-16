@@ -1,5 +1,0 @@
-{
-    "title": "Foundations of this site",
-    "created_at": "2021-07-05 13:30:00",
-    "content": "<p>This site started as a static HTML file with a few PHP includes. No frameworks, no build steps just markup, styles, and a single SQLite file for persistence.</p>\n\n<p>Keeping it minimal let me iterate quickly. If I wanted a guestbook, I wrote one. If I needed a counter, I added it. The stack stayed understandable and portable.</p>\n\n<p>Those foundations still hold: simple code, small files, and zero dependencies on heavy services.</p>"
-}
