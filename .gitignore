@@ -1,5 +1,28 @@
-visitor_count.txt
-julianfalk.dev.db
-.env
+# Database - never overwrite
+*.db
+*.sqlite
+*.sqlite3
 
+# Environment
+.env
+.env.*
+
+# Local data
+visitor_count.txt
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Claude
 CLAUDE.md
+
+# Logs
+*.log
+
+# Temp files
+*.tmp
+*.bak
