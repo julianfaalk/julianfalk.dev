@@ -77,12 +77,79 @@ if (preg_match('#^/blog/([a-z0-9-]+)$#', $requested_path, $matches)) {
 }
 
 $blog_posts_by_year = getBlogPostsByYear();
+
+// SEO variables
+$base_url = 'https://www.julianfalk.dev';
+if ($is_single_post_view && $single_post) {
+    $seo_title = $single_post['title'] . ' | Julian Falk';
+    $seo_description = mb_substr(strip_tags($single_post['content']), 0, 155) . '...';
+    $seo_canonical = $base_url . '/blog/' . $single_post['slug'];
+    $seo_type = 'article';
+    $hero_url = getHeroImageUrl($single_post);
+    $seo_image = $hero_url ? $base_url . $hero_url : null;
+    $seo_published = $single_post['created_at'];
+} else {
+    $seo_title = 'Julian Falk - Software Engineer & Builder';
+    $seo_description = 'Personal blog by Julian Falk - thoughts on software engineering, building products, and life.';
+    $seo_canonical = $base_url . '/';
+    $seo_type = 'website';
+    $seo_image = null;
+    $seo_published = null;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <?php include __DIR__ . '/includes/partials/head.php'; ?>
+
+    <!-- JSON-LD Structured Data -->
+    <?php if ($is_single_post_view && $single_post): ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "<?php echo htmlspecialchars($single_post['title'], ENT_QUOTES); ?>",
+        "description": "<?php echo htmlspecialchars($seo_description, ENT_QUOTES); ?>",
+        "datePublished": "<?php echo date('c', strtotime($single_post['created_at'])); ?>",
+        "dateModified": "<?php echo date('c', strtotime($single_post['created_at'])); ?>",
+        "author": {
+            "@type": "Person",
+            "name": "Julian Falk",
+            "url": "https://www.julianfalk.dev"
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Julian Falk"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "<?php echo htmlspecialchars($seo_canonical, ENT_QUOTES); ?>"
+        }
+        <?php if ($seo_image): ?>
+        ,"image": "<?php echo htmlspecialchars($seo_image, ENT_QUOTES); ?>"
+        <?php endif; ?>
+    }
+    </script>
+    <?php else: ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Julian Falk",
+        "url": "https://www.julianfalk.dev",
+        "author": {
+            "@type": "Person",
+            "name": "Julian Falk",
+            "url": "https://www.julianfalk.dev",
+            "sameAs": [
+                "https://x.com/julianfaalk"
+            ]
+        }
+    }
+    </script>
+    <?php endif; ?>
+
     <?php if ($subscription_message_type === 'welcome'): ?>
     <script>
         $(function() { triggerWelcomeCelebration(); });
