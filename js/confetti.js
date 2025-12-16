@@ -3,7 +3,7 @@
  * Triggers colorful confetti particles from a target element
  */
 var Confetti = (function() {
-    var colors = ['#00ff41', '#39ff14', '#32cd32', '#90ee90', '#7fff00', '#adff2f'];
+    var colors = ['#4ade80', '#6ee7a0', '#22c55e', '#a7f3d0', '#86efac', '#34d399'];
 
     function launch(targetElement, options) {
         options = options || {};
