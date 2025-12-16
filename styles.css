@@ -794,8 +794,66 @@ h3 {
 }
 
 .newsletter-card.welcome {
-    box-shadow: 0 0 30px rgba(11, 130, 240, 0.35);
-    animation: welcomeGlow 1.8s ease-in-out 1;
+    box-shadow: 0 0 40px rgba(11, 130, 240, 0.5);
+    animation: welcomeBounce 0.6s ease-out, welcomePulse 2s ease-in-out 0.6s 2;
+    position: relative;
+    overflow: visible;
+}
+
+.newsletter-card.welcome::before,
+.newsletter-card.welcome::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: confetti 1.5s ease-out forwards;
+}
+
+.newsletter-card.welcome::before {
+    background: #4da3ff;
+    animation-delay: 0s;
+}
+
+.newsletter-card.welcome::after {
+    background: #ff6b6b;
+    animation-delay: 0.1s;
+}
+
+@keyframes welcomeBounce {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes welcomePulse {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(11, 130, 240, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(11, 130, 240, 0.6);
+    }
+}
+
+@keyframes confetti {
+    0% {
+        transform: translateX(-50%) translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(-50% + var(--x, 50px))) translateY(-120px) rotate(720deg);
+        opacity: 0;
+    }
 }
 
 .newsletter-content {
@@ -875,24 +933,38 @@ h3 {
 }
 
 .message.welcome {
-    background: rgba(11, 130, 240, 0.15);
+    background: linear-gradient(135deg, rgba(11, 130, 240, 0.2) 0%, rgba(78, 205, 196, 0.15) 100%);
     border: 1px solid rgba(11, 130, 240, 0.5);
     color: #9ecbff;
+    font-size: 1.1rem;
+    padding: 1.2rem;
+    text-align: center;
 }
 
 .welcome-message {
-    animation: welcomeGlow 1.2s ease-in-out 2;
+    animation: welcomeMessagePop 0.5s ease-out, welcomeGlow 1.5s ease-in-out 0.5s 2;
+}
+
+@keyframes welcomeMessagePop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 @keyframes welcomeGlow {
-    0% {
-        box-shadow: 0 0 0 rgba(11, 130, 240, 0.2);
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(11, 130, 240, 0.2);
     }
     50% {
-        box-shadow: 0 0 32px rgba(11, 130, 240, 0.35);
-    }
-    100% {
-        box-shadow: 0 0 0 rgba(11, 130, 240, 0.2);
+        box-shadow: 0 0 25px rgba(11, 130, 240, 0.4);
     }
 }
 
