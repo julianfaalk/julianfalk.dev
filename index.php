@@ -270,6 +270,16 @@ $blog_posts_by_year = getBlogPostsByYear();
              <?php echo number_format($visitor_count); ?> people visited
         </div>
     <?php endif; ?>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <h4 class="footer-title">Links</h4>
+            <ul class="footer-links">
+                <li><a href="https://nebenkostenpro.de/" target="_blank" rel="noopener noreferrer">Nebenkostenpro</a></li>
+                <li><a href="https://falksoftware.com/" target="_blank" rel="noopener noreferrer">Falk Software</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 
 </html>

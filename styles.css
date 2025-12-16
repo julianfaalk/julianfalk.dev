@@ -1527,3 +1527,59 @@ h3 {
         font-size: 0.9rem;
     }
 }
+
+/* Site Footer */
+.site-footer {
+    width: 100%;
+    padding: 3rem 1rem 2rem 1rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 1rem 0;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.footer-links li a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.footer-links li a:hover {
+    color: #4ade80;
+}
+
+@media (max-width: 480px) {
+    .site-footer {
+        padding: 2rem 1rem 1.5rem 1rem;
+    }
+
+    .footer-title {
+        font-size: 0.95rem;
+    }
+
+    .footer-links li a {
+        font-size: 0.9rem;
+    }
+}
