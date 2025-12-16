@@ -1,3 +1,7 @@
+html {
+    overflow-x: hidden;
+}
+
 body {
     background: #111;
     color: #fff;
@@ -6,6 +10,8 @@ body {
     position: relative;
     min-height: 100vh;
     padding-bottom: 100px;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
 }
 
 .main-content {
@@ -15,6 +21,20 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 1.5rem 0.75rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .main-content {
+        padding: 1rem 0.5rem;
+    }
 }
 
 h1 {
@@ -44,6 +64,7 @@ h1 {
     backdrop-filter: blur(10px);
     transition: all 0.4s ease;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .bio-section:hover {
@@ -110,6 +131,8 @@ h1 {
     background-clip: text;
     animation: textShine 6s linear infinite;
     position: relative;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 @keyframes textShine {
@@ -124,11 +147,13 @@ h1 {
 @media (max-width: 768px) {
     .bio-section {
         margin-bottom: 2rem;
-        padding: 1.5rem 1.5rem;
+        padding: 1.5rem 1.25rem;
+        max-width: calc(100% - 2rem);
     }
 
     .bio-text {
         font-size: 1rem;
+        letter-spacing: 0;
     }
 }
 
@@ -137,16 +162,42 @@ h1 {
         margin-bottom: 1.5rem;
         padding: 1.25rem 1rem;
         border-radius: 8px;
+        max-width: calc(100% - 1.5rem);
     }
 
     .bio-text {
         font-size: 0.9rem;
         line-height: 1.7;
+        letter-spacing: 0;
     }
 
     .bio-section::before {
         left: 15%;
         right: 15%;
+    }
+}
+
+@media (max-width: 360px) {
+    .bio-section {
+        margin-bottom: 1.25rem;
+        padding: 1rem 0.75rem;
+        border-radius: 6px;
+        max-width: calc(100% - 1rem);
+    }
+
+    .bio-section:hover {
+        transform: none;
+    }
+
+    .bio-text {
+        font-size: 0.85rem;
+        line-height: 1.6;
+        letter-spacing: 0;
+    }
+
+    .bio-section::before {
+        left: 10%;
+        right: 10%;
     }
 }
 
@@ -267,7 +318,33 @@ h3 {
     .x-profile {
         left: 0.75rem;
     }
+}
 
+/* Very small screens */
+@media (max-width: 360px) {
+    h1 {
+        font-size: 1.25rem;
+    }
+
+    .corner-box {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.7rem;
+        min-width: 80px;
+        max-width: 120px;
+        bottom: 0.5rem;
+    }
+
+    .counter {
+        right: 0.5rem;
+    }
+
+    .x-profile {
+        left: 0.5rem;
+    }
+
+    .x-profile a span:first-child {
+        display: none;
+    }
 }
 
 /* Guestbook Styles */
@@ -275,6 +352,20 @@ h3 {
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+    .guestbook-section {
+        padding: 0 0.5rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .guestbook-section {
+        padding: 0 0.25rem;
+    }
 }
 
 .blog-section {
@@ -306,6 +397,7 @@ h3 {
     .blog-date-inline {
         width: 64px;
         font-size: 0.98rem;
+        flex-shrink: 0;
     }
 
     .blog-row {
@@ -317,6 +409,48 @@ h3 {
     .blog-list {
         padding-left: 0;
         padding-right: 0;
+    }
+
+    .blog-list-item {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .blog-section {
+        padding: 1rem 0.75rem;
+    }
+
+    .year-label {
+        font-size: 1.2rem;
+    }
+
+    .blog-title-link {
+        font-size: 1.05rem;
+    }
+
+    .blog-date-inline {
+        width: 58px;
+        font-size: 0.9rem;
+    }
+
+    .blog-list-item {
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .blog-section {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .blog-title-link {
+        font-size: 1rem;
+    }
+
+    .blog-date-inline {
+        width: 52px;
+        font-size: 0.85rem;
     }
 }
 
@@ -344,12 +478,56 @@ h3 {
     }
 
     .single-view .single-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
         line-height: 1.25;
     }
 
     .single-view .single-body {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+    }
+
+    .single-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .single-view .blog-section {
+        padding: 0 0.75rem;
+    }
+
+    .single-view .single-title {
+        font-size: 1.6rem;
+        line-height: 1.3;
+    }
+
+    .single-view .single-body {
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+
+    .single-date {
+        font-size: 0.9rem;
+    }
+
+    .blog-back-link a {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .single-view .blog-section {
+        padding: 0 0.5rem;
+    }
+
+    .single-view .single-title {
+        font-size: 1.4rem;
+    }
+
+    .single-view .single-body {
+        font-size: 1rem;
     }
 }
 
@@ -400,9 +578,7 @@ h3 {
     font-weight: 600;
     flex: 1;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    word-break: break-word;
 }
 
 .single-view .blog-title-link {
@@ -613,6 +789,7 @@ h3 {
     flex: 1 1 0;
     min-width: 0;
     padding: 0.9rem 1rem;
+    min-height: 48px;
     background: transparent;
     border: 1px solid #fff;
     border-radius: 5px 0 0 5px;
@@ -620,6 +797,7 @@ h3 {
     font-size: 1rem;
     font-family: 'Share Tech Mono', monospace;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .newsletter-input::placeholder {
@@ -628,6 +806,7 @@ h3 {
 
 .newsletter-submit {
     padding: 1.05rem 1.4rem;
+    min-height: 48px;
     border-radius: 0 5px 5px 0;
     border: 1px solid #fff;
     border-left: none;
@@ -636,11 +815,12 @@ h3 {
     font-weight: 700;
     font-family: 'Share Tech Mono', monospace;
     font-size: 1.05rem;
-    min-width: 170px;
+    min-width: 140px;
     flex: 0 0 auto;
     cursor: pointer;
     transition: transform 0.1s ease, box-shadow 0.2s ease;
     white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .newsletter-submit:hover {
@@ -737,14 +917,16 @@ h3 {
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.875rem;
+    min-height: 48px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     color: #fff;
     font-family: Arial, sans-serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .form-group input:focus,
@@ -817,7 +999,8 @@ h3 {
 
 .submit-btn {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.875rem;
+    min-height: 48px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 4px;
@@ -826,6 +1009,7 @@ h3 {
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: 'Share Tech Mono', monospace;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .submit-btn:hover {
@@ -1036,6 +1220,10 @@ h3 {
         font-size: 1.25rem;
     }
 
+    h3 {
+        font-size: 1.1rem;
+    }
+
     .guestbook-form {
         padding: 0.75rem;
     }
@@ -1045,6 +1233,11 @@ h3 {
         margin: 1.25rem 0 1.75rem 0;
     }
 
+    .newsletter-copy h3 {
+        font-size: 1.1rem;
+        line-height: 1.4;
+    }
+
     .social-media-inputs {
         flex-direction: column;
     }
@@ -1052,9 +1245,96 @@ h3 {
     .social-platform-select {
         flex: 1;
         width: 100%;
+        min-height: 48px;
+    }
+
+    .social-handle-input {
+        min-height: 48px;
     }
 
     .entry {
         padding: 0.75rem;
+    }
+
+    .entry-name {
+        font-size: 0.95rem;
+    }
+
+    .entry-date {
+        font-size: 0.8rem;
+    }
+
+    .entry-message {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 360px) {
+    h1 {
+        font-size: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    .guestbook-form {
+        padding: 0.5rem;
+    }
+
+    .newsletter-card {
+        padding: 0.75rem;
+        margin: 1rem 0 1.5rem 0;
+    }
+
+    .newsletter-copy h3 {
+        font-size: 1rem;
+    }
+
+    .newsletter-submit {
+        font-size: 0.95rem;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .newsletter-input {
+        font-size: 0.95rem;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.95rem;
+        padding: 0.75rem;
+    }
+
+    .entry {
+        padding: 0.6rem;
+    }
+
+    .entry-name {
+        font-size: 0.9rem;
+    }
+
+    .entry-message {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .submit-btn {
+        font-size: 0.95rem;
+    }
+
+    .message {
+        padding: 0.75rem;
+        font-size: 0.9rem;
     }
 }
