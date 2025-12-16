@@ -117,6 +117,14 @@ $blog_posts_by_year = getBlogPostsByYear();
     <div class="main-content">
         <h1><a class="site-title-link" href="/#blog">julianfalk.dev</a></h1>
 
+        <?php if (!$is_single_post_view): ?>
+            <div class="bio-section">
+                <p class="bio-text">
+                   Welcome to my super awesome website. I'm sharing insights, thoughts, learings and general opinions about the space of software engineering and life in general. Subsribe to my super aweseome newsletter to get the latest updates and insights directly in your inbox.
+                </p>
+            </div>
+        <?php endif; ?>
+
         <div class="blog-section" id="blog">
             <!-- <div class="section-header">
                 <h2>Blog</h2>
