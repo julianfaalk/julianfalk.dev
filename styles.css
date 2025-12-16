@@ -58,9 +58,9 @@ h1 {
     text-align: center;
     position: relative;
     padding: 2rem 2.5rem;
-    background: linear-gradient(135deg, rgba(11, 130, 240, 0.08) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(11, 130, 240, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.08) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0, 255, 65, 0.05) 100%);
     border-radius: 12px;
-    border: 1px solid rgba(11, 130, 240, 0.2);
+    border: 1px solid rgba(0, 255, 65, 0.2);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     transition: all 0.4s ease;
@@ -69,8 +69,8 @@ h1 {
 }
 
 .bio-section:hover {
-    border-color: rgba(11, 130, 240, 0.4);
-    box-shadow: 0 8px 40px rgba(11, 130, 240, 0.15), 0 4px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    border-color: rgba(0, 255, 65, 0.4);
+    box-shadow: 0 8px 40px rgba(0, 255, 65, 0.15), 0 4px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     transform: translateY(-2px);
 }
 
@@ -81,7 +81,7 @@ h1 {
     left: 20%;
     right: 20%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #0b82f0, transparent);
+    background: linear-gradient(90deg, transparent, #00ff41, transparent);
     border-radius: 2px;
     animation: glowPulse 3s ease-in-out infinite;
 }
@@ -125,7 +125,7 @@ h1 {
     margin: 0;
     font-family: 'Share Tech Mono', monospace;
     letter-spacing: 0.02em;
-    background: linear-gradient(90deg, #fff, rgba(200, 220, 255, 0.9), #fff);
+    background: linear-gradient(90deg, #fff, rgba(144, 238, 144, 0.9), #fff);
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -582,7 +582,7 @@ h3 {
 }
 
 .blog-title-link {
-    color: #0b82f0;
+    color: #00ff41;
     text-decoration: none;
     font-size: 1.25rem;
     font-weight: 600;
@@ -592,7 +592,7 @@ h3 {
 }
 
 .single-view .blog-title-link {
-    color: #1e88e5;
+    color: #32cd32;
 }
 
 .blog-title-link:hover {
@@ -652,7 +652,7 @@ h3 {
 }
 
 .single-view .blog-content a {
-    color: #4da3ff;
+    color: #39ff14;
 }
 
 .inline-image {
@@ -732,7 +732,7 @@ h3 {
 }
 
 .single-title-link {
-    color: #0b82f0;
+    color: #00ff41;
     text-decoration: none;
 }
 
@@ -794,7 +794,7 @@ h3 {
 }
 
 .newsletter-card.welcome {
-    box-shadow: 0 0 40px rgba(11, 130, 240, 0.5);
+    box-shadow: 0 0 40px rgba(0, 255, 65, 0.5);
     animation: welcomeBounce 0.6s ease-out, welcomePulse 2s ease-in-out 0.6s 2;
     position: relative;
     overflow: visible;
@@ -813,12 +813,12 @@ h3 {
 }
 
 .newsletter-card.welcome::before {
-    background: #4da3ff;
+    background: #00ff41;
     animation-delay: 0s;
 }
 
 .newsletter-card.welcome::after {
-    background: #ff6b6b;
+    background: #39ff14;
     animation-delay: 0.1s;
 }
 
@@ -838,10 +838,10 @@ h3 {
 
 @keyframes welcomePulse {
     0%, 100% {
-        box-shadow: 0 0 30px rgba(11, 130, 240, 0.3);
+        box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
     }
     50% {
-        box-shadow: 0 0 50px rgba(11, 130, 240, 0.6);
+        box-shadow: 0 0 50px rgba(0, 255, 65, 0.6);
     }
 }
 
@@ -933,9 +933,9 @@ h3 {
 }
 
 .message.welcome {
-    background: linear-gradient(135deg, rgba(11, 130, 240, 0.2) 0%, rgba(78, 205, 196, 0.15) 100%);
-    border: 1px solid rgba(11, 130, 240, 0.5);
-    color: #9ecbff;
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.2) 0%, rgba(57, 255, 20, 0.15) 100%);
+    border: 1px solid rgba(0, 255, 65, 0.5);
+    color: #90ee90;
     font-size: 1.1rem;
     padding: 1.2rem;
     text-align: center;
@@ -961,10 +961,10 @@ h3 {
 
 @keyframes welcomeGlow {
     0%, 100% {
-        box-shadow: 0 0 10px rgba(11, 130, 240, 0.2);
+        box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
     }
     50% {
-        box-shadow: 0 0 25px rgba(11, 130, 240, 0.4);
+        box-shadow: 0 0 25px rgba(0, 255, 65, 0.4);
     }
 }
 
@@ -1148,8 +1148,8 @@ h3 {
 .create-entry-btn {
     padding: 0.6rem 1.2rem;
     min-height: 44px;
-    background: rgba(11, 130, 240, 0.15);
-    border: 1px solid rgba(11, 130, 240, 0.4);
+    background: rgba(0, 255, 65, 0.15);
+    border: 1px solid rgba(0, 255, 65, 0.4);
     border-radius: 6px;
     color: #fff;
     font-size: 0.95rem;
@@ -1161,8 +1161,8 @@ h3 {
 }
 
 .create-entry-btn:hover {
-    background: rgba(11, 130, 240, 0.25);
-    border-color: rgba(11, 130, 240, 0.6);
+    background: rgba(0, 255, 65, 0.25);
+    border-color: rgba(0, 255, 65, 0.6);
     transform: translateY(-1px);
 }
 
