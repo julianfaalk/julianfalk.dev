@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Deploy
 
 on:
   push:
@@ -8,5 +8,5 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy via webhook
-        run: curl -s "https://www.julianfalk.dev/deploy.php?token=${{ secrets.DEPLOY_SECRET }}"
+      - name: Trigger deploy
+        run: curl -s https://www.julianfalk.dev/deploy.php
