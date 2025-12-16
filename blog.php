@@ -143,8 +143,15 @@ function getPostBasePath($post) {
  * Markers supported:
  * - {{image:filename.jpg}} or {{image:filename.jpg|alt text}}
  * - {{youtube:VIDEO_ID}}
+ *
+ * Content can be a string or an array of paragraphs
  */
 function formatContentHtml($content, $post = null) {
+    // Handle array content (join with newlines)
+    if (is_array($content)) {
+        $content = implode("\n", $content);
+    }
+
     $basePath = $post ? getPostBasePath($post) : '';
 
     // Process image markers: {{image:file.jpg}} or {{image:file.jpg|alt text}}

@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    background: #3C3C3C;
+    background: #2A2A2A;
     color: #fff;
     font-family: Arial, sans-serif;
     margin: 0;
@@ -42,6 +42,7 @@ h1 {
     font-weight: 300;
     margin: 0 0 3rem 0;
     font-family: 'Share Tech Mono', monospace;
+    align-self: flex-start;
 }
 
 .site-title-link {
@@ -395,9 +396,7 @@ h3 {
     }
 
     .blog-date-inline {
-        width: 64px;
-        font-size: 0.98rem;
-        flex-shrink: 0;
+        font-size: 0.85rem;
     }
 
     .blog-row {
@@ -411,9 +410,6 @@ h3 {
         padding-right: 0;
     }
 
-    .blog-list-item {
-        flex-wrap: wrap;
-    }
 }
 
 @media (max-width: 480px) {
@@ -430,12 +426,7 @@ h3 {
     }
 
     .blog-date-inline {
-        width: 58px;
-        font-size: 0.9rem;
-    }
-
-    .blog-list-item {
-        gap: 0.5rem;
+        font-size: 0.8rem;
     }
 }
 
@@ -449,19 +440,19 @@ h3 {
     }
 
     .blog-date-inline {
-        width: 52px;
-        font-size: 0.85rem;
+        font-size: 0.75rem;
     }
 }
 
 .single-view {
-    background: #3C3C3C;
+    background: #2A2A2A;
     color: #fff;
 }
 
 .single-view .main-content {
     align-items: stretch;
 }
+
 
 .single-view .blog-section {
     max-width: 900px;
@@ -517,10 +508,6 @@ h3 {
     }
 
     .single-date {
-        font-size: 0.9rem;
-    }
-
-    .blog-back-link a {
         font-size: 0.9rem;
     }
 }
@@ -632,6 +619,7 @@ h3 {
     font-size: 1.05rem;
     font-weight: 500;
     font-style: italic;
+    flex-shrink: 0;
 }
 
 .blog-content {
@@ -682,20 +670,6 @@ h3 {
     width: 100%;
     height: 100%;
     border: none;
-}
-
-.blog-back-link {
-    margin-top: 1rem;
-}
-
-.blog-back-link a {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    font-size: 0.95rem;
-}
-
-.blog-back-link a:hover {
-    text-decoration: underline;
 }
 
 .blog-single {
@@ -777,8 +751,22 @@ h3 {
     color: #ddd;
 }
 
-.single-view .blog-back-link a {
-    color: #4da3ff;
+.more-posts-section {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.section-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin: 2rem 0;
+}
+
+.more-posts-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 1.5rem 0;
 }
 
 .newsletter-card {
@@ -1007,7 +995,7 @@ h3 {
 }
 
 .social-platform-select option {
-    background: #3C3C3C;
+    background: #2A2A2A;
     color: #fff;
 }
 

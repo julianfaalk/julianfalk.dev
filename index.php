@@ -160,9 +160,6 @@ $blog_posts_by_year = getBlogPostsByYear();
                             </div>
                         <?php endif; ?>
                         <div class="blog-content single-body"><?php echo formatContentHtml($single_post['content'], $single_post); ?></div>
-                        <div class="blog-back-link">
-                            <a href="/#blog">← Back to all posts</a>
-                        </div>
                     </article>
                 <?php else: ?>
                     <p class="no-entries">Post not found. <a href="/#blog">Back to blog</a></p>
@@ -207,8 +204,33 @@ $blog_posts_by_year = getBlogPostsByYear();
                     <input type="email" name="subscriber_email" class="newsletter-input" placeholder="your@email.com" required>
                     <button type="submit" name="subscribe_newsletter" class="newsletter-submit">Subscribe</button>
                 </form>
-                <!-- <p class="newsletter-hint">You will get a confirmation link (valid for 1 hour).</p> -->
             </div>
+
+            <?php if ($is_single_post_view && !empty($blog_posts_by_year)): ?>
+                <div class="more-posts-section">
+                    <hr class="section-divider">
+                    <h3 class="more-posts-title">More Posts</h3>
+                    <div class="blog-timeline">
+                        <?php foreach ($blog_posts_by_year as $year => $posts): ?>
+                            <div class="blog-row">
+                                <div class="year-label"><?php echo htmlspecialchars($year); ?></div>
+                                <div class="year-posts blog-list">
+                                    <?php foreach ($posts as $post): ?>
+                                        <?php if ($post['slug'] !== $single_post['slug']): ?>
+                                            <div class="blog-list-item">
+                                                <a class="blog-title-link" href="/blog/<?php echo htmlspecialchars($post['slug']); ?>">
+                                                    <?php echo htmlspecialchars($post['title']); ?>
+                                                </a>
+                                                <span class="blog-date-inline"><?php echo htmlspecialchars(formatDateShort($post['created_at'])); ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
 
         <?php if (!$is_single_post_view): ?>
