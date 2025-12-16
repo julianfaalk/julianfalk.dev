@@ -82,114 +82,12 @@ $blog_posts_by_year = getBlogPostsByYear();
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>@julianfaalk - Blog</title>
-    <link rel="icon" type="image/jpeg" href="/assets/images/favicon.jpg">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style>
-        <?php echo file_get_contents(__DIR__ . '/styles.css'); ?>
-    </style>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <?php include __DIR__ . '/includes/partials/head.php'; ?>
+    <?php if ($subscription_message_type === 'welcome'): ?>
     <script>
-        $(function () {
-            var $platformSelect = $('#social_media_platform');
-            var $handleInput = $('#social_media_handle');
-
-            function updateHandleInput() {
-                if ($platformSelect.val()) {
-                    $handleInput.prop('disabled', false).attr('placeholder', '@username');
-                } else {
-                    $handleInput.prop('disabled', true).val('').attr('placeholder', '@username');
-                }
-            }
-
-            if ($platformSelect.length && $handleInput.length) {
-                $platformSelect.on('change', updateHandleInput);
-                updateHandleInput(); // Initialize on page load
-            }
-
-            // Toggle guestbook form visibility
-            var $toggleBtn = $('#toggleGuestbookForm');
-            var $formWrapper = $('#guestbookFormWrapper');
-            var isFormOpen = false;
-
-            $toggleBtn.on('click', function() {
-                isFormOpen = !isFormOpen;
-                $formWrapper.slideToggle(300);
-                $toggleBtn.text(isFormOpen ? '− Close' : '+ Create Entry');
-            });
-
-            <?php if ($subscription_message_type === 'welcome'): ?>
-            // Confetti celebration effect
-            (function() {
-                var colors = ['#4da3ff', '#ff6b6b', '#4ecdc4', '#ffe66d', '#ff8b94', '#a8e6cf'];
-                var container = document.getElementById('newsletter');
-                if (!container) return;
-
-                var rect = container.getBoundingClientRect();
-
-                for (var i = 0; i < 50; i++) {
-                    var confetti = document.createElement('div');
-                    confetti.className = 'confetti-particle';
-                    confetti.style.cssText =
-                        'position:fixed;' +
-                        'width:' + (Math.random() * 10 + 5) + 'px;' +
-                        'height:' + (Math.random() * 10 + 5) + 'px;' +
-                        'background:' + colors[Math.floor(Math.random() * colors.length)] + ';' +
-                        'left:' + (rect.left + rect.width / 2) + 'px;' +
-                        'top:' + (rect.top + window.scrollY) + 'px;' +
-                        'border-radius:' + (Math.random() > 0.5 ? '50%' : '2px') + ';' +
-                        'pointer-events:none;' +
-                        'z-index:9999;' +
-                        'opacity:1;';
-                    document.body.appendChild(confetti);
-
-                    var angle = (Math.random() * 120 + 210) * Math.PI / 180;
-                    var velocity = Math.random() * 300 + 200;
-                    var vx = Math.cos(angle) * velocity;
-                    var vy = Math.sin(angle) * velocity;
-                    var rotation = Math.random() * 720 - 360;
-
-                    (function(el, vx, vy, rot) {
-                        var startTime = null;
-                        var startX = parseFloat(el.style.left);
-                        var startY = parseFloat(el.style.top);
-                        var gravity = 400;
-
-                        function animate(timestamp) {
-                            if (!startTime) startTime = timestamp;
-                            var elapsed = (timestamp - startTime) / 1000;
-
-                            var x = startX + vx * elapsed;
-                            var y = startY + vy * elapsed + 0.5 * gravity * elapsed * elapsed;
-                            var opacity = Math.max(0, 1 - elapsed / 2);
-
-                            el.style.left = x + 'px';
-                            el.style.top = y + 'px';
-                            el.style.opacity = opacity;
-                            el.style.transform = 'rotate(' + (rot * elapsed) + 'deg)';
-
-                            if (elapsed < 2) {
-                                requestAnimationFrame(animate);
-                            } else {
-                                el.remove();
-                            }
-                        }
-                        requestAnimationFrame(animate);
-                    })(confetti, vx, vy, rotation);
-                }
-
-                // Scroll to newsletter section
-                setTimeout(function() {
-                    container.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 100);
-            })();
-            <?php endif; ?>
-        });
+        $(function() { triggerWelcomeCelebration(); });
     </script>
+    <?php endif; ?>
 </head>
 
 <body class="<?php echo $is_single_post_view ? 'single-view' : ''; ?>">
@@ -236,23 +134,7 @@ $blog_posts_by_year = getBlogPostsByYear();
                 <?php if (empty($blog_posts_by_year)): ?>
                     <p class="no-entries">No posts yet.</p>
                 <?php else: ?>
-                    <div class="blog-timeline">
-                        <?php foreach ($blog_posts_by_year as $year => $posts): ?>
-                            <div class="blog-row">
-                                <div class="year-label"><?php echo htmlspecialchars($year); ?></div>
-                                <div class="year-posts blog-list">
-                                    <?php foreach ($posts as $post): ?>
-                                        <div class="blog-list-item">
-                                            <span class="blog-date-inline"><?php echo htmlspecialchars(formatDateShort($post['created_at'])); ?></span>
-                                            <a class="blog-title-link" href="/blog/<?php echo htmlspecialchars($post['slug']); ?>">
-                                                <?php echo htmlspecialchars($post['title']); ?>
-                                            </a>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php $exclude_slug = null; include __DIR__ . '/includes/partials/blog-list.php'; ?>
                 <?php endif; ?>
             <?php endif; ?>
 
@@ -278,25 +160,7 @@ $blog_posts_by_year = getBlogPostsByYear();
                 <div class="more-posts-section">
                     <hr class="section-divider">
                     <h3 class="more-posts-title">More Posts</h3>
-                    <div class="blog-timeline">
-                        <?php foreach ($blog_posts_by_year as $year => $posts): ?>
-                            <div class="blog-row">
-                                <div class="year-label"><?php echo htmlspecialchars($year); ?></div>
-                                <div class="year-posts blog-list">
-                                    <?php foreach ($posts as $post): ?>
-                                        <?php if ($post['slug'] !== $single_post['slug']): ?>
-                                            <div class="blog-list-item">
-                                                <span class="blog-date-inline"><?php echo htmlspecialchars(formatDateShort($post['created_at'])); ?></span>
-                                                <a class="blog-title-link" href="/blog/<?php echo htmlspecialchars($post['slug']); ?>">
-                                                    <?php echo htmlspecialchars($post['title']); ?>
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php $exclude_slug = $single_post['slug']; include __DIR__ . '/includes/partials/blog-list.php'; ?>
                 </div>
             <?php endif; ?>
         </div>
