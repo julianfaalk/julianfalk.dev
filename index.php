@@ -97,7 +97,7 @@ $blog_posts_by_year = getBlogPostsByYear();
         <?php if (!$is_single_post_view): ?>
             <div class="bio-section">
                 <p class="bio-text">
-                    Welcome to my little website. Here I'm sharing insights, thoughts, learings and general opinions about software engineering and life in general. Subsribe to my super aweseome newsletter to get the latest updates and insights directly in your inbox.
+                    WWelcome to my little website. Here I'm sharing insights, thoughts, learings and general opinions about software engineering and life in general. Subsribe to my super aweseome newsletter to get the latest updates and insights directly in your inbox.
                 </p>
             </div>
         <?php endif; ?>
