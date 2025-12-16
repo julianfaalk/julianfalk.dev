@@ -1,0 +1,5 @@
+{
+    "title": "Caching with plain text",
+    "created_at": "2022-08-27 07:30:00",
+    "content": "<p>I added a tiny text cache for expensive reads. Responses get written to a `.cache` folder with short TTLs, and invalidation is a file delete.</p>\n\n<p>It is crude but effective: no daemons, no external services. Just fast file reads and predictable fallbacks when the cache expires.</p>\n\n<p>The simplicity keeps the system observable. If a cache misbehaves, I can read it with `cat` and fix it with `rm`.</p>"
+}

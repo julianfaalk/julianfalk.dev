@@ -1,7 +1,7 @@
 <?php
-// Blog helper functions backed by SQLite
+// Blog helper functions - JSON file based storage with year/month organization
 
-require_once __DIR__ . '/guestbook.php';
+define('POSTS_DIR', __DIR__ . '/posts');
 
 function slugifyTitle($title) {
     $slug = strtolower($title);
@@ -11,160 +11,180 @@ function slugifyTitle($title) {
     return $slug ?: 'post';
 }
 
-function ensureBlogTable($db) {
-    // Create blog_posts table if missing
-    $db->exec("CREATE TABLE IF NOT EXISTS blog_posts (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        content TEXT NOT NULL,
-        image_url TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )");
-
-    // Add image_url if it was missing previously
-    try {
-        $db->exec("ALTER TABLE blog_posts ADD COLUMN image_url TEXT");
-    } catch (PDOException $e) {
-        // Column already exists; safe to ignore
-    }
-}
-
+/**
+ * Get all blog posts grouped by year
+ * Scans /posts/YYYY/MM/slug/post.json structure
+ */
 function getBlogPostsByYear() {
-    $db = getDB();
-    if (!$db) {
+    $postsDir = POSTS_DIR;
+
+    if (!is_dir($postsDir)) {
         return [];
     }
 
-    try {
-        ensureBlogTable($db);
-        $stmt = $db->query("SELECT id, title, content, image_url, created_at FROM blog_posts ORDER BY created_at DESC");
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $posts = [];
 
-        $grouped = [];
-        foreach ($posts as $post) {
-            $year = date('Y', strtotime($post['created_at']));
-            if (!isset($grouped[$year])) {
-                $grouped[$year] = [];
+    // Scan year folders
+    $years = scandir($postsDir);
+    foreach ($years as $year) {
+        if ($year === '.' || $year === '..' || !is_numeric($year)) continue;
+
+        $yearPath = "$postsDir/$year";
+        if (!is_dir($yearPath)) continue;
+
+        // Scan month folders
+        $months = scandir($yearPath);
+        foreach ($months as $month) {
+            if ($month === '.' || $month === '..') continue;
+
+            $monthPath = "$yearPath/$month";
+            if (!is_dir($monthPath)) continue;
+
+            // Scan post folders
+            $slugs = scandir($monthPath);
+            foreach ($slugs as $slug) {
+                if ($slug === '.' || $slug === '..') continue;
+
+                $jsonPath = "$monthPath/$slug/post.json";
+                if (!file_exists($jsonPath)) continue;
+
+                $json = file_get_contents($jsonPath);
+                $post = json_decode($json, true);
+
+                if (!$post || !isset($post['title']) || !isset($post['created_at'])) continue;
+
+                // Store path info for URL building
+                $post['slug'] = $slug;
+                $post['year'] = $year;
+                $post['month'] = $month;
+                $posts[] = $post;
             }
-            $grouped[$year][] = $post;
         }
-
-        return $grouped;
-    } catch (PDOException $e) {
-        error_log("Blog fetch error: " . $e->getMessage());
-        return [];
     }
+
+    // Sort by created_at descending
+    usort($posts, function($a, $b) {
+        return strtotime($b['created_at']) - strtotime($a['created_at']);
+    });
+
+    // Group by year
+    $grouped = [];
+    foreach ($posts as $post) {
+        $year = $post['year'];
+        if (!isset($grouped[$year])) {
+            $grouped[$year] = [];
+        }
+        $grouped[$year][] = $post;
+    }
+
+    // Sort years descending
+    krsort($grouped);
+
+    return $grouped;
 }
 
+/**
+ * Get a single blog post by its slug
+ * Searches through all year/month folders
+ */
 function getBlogPostBySlug($slug) {
-    $db = getDB();
-    if (!$db) {
+    $postsDir = POSTS_DIR;
+
+    if (!is_dir($postsDir)) {
         return null;
     }
 
-    try {
-        ensureBlogTable($db);
-        $stmt = $db->query("SELECT id, title, content, image_url, created_at FROM blog_posts");
+    // Scan year folders
+    $years = scandir($postsDir);
+    foreach ($years as $year) {
+        if ($year === '.' || $year === '..' || !is_numeric($year)) continue;
 
-        while ($post = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if (slugifyTitle($post['title']) === $slug) {
-                return $post;
+        $yearPath = "$postsDir/$year";
+        if (!is_dir($yearPath)) continue;
+
+        // Scan month folders
+        $months = scandir($yearPath);
+        foreach ($months as $month) {
+            if ($month === '.' || $month === '..') continue;
+
+            $monthPath = "$yearPath/$month";
+            $jsonPath = "$monthPath/$slug/post.json";
+
+            if (file_exists($jsonPath)) {
+                $json = file_get_contents($jsonPath);
+                $post = json_decode($json, true);
+
+                if ($post) {
+                    $post['slug'] = $slug;
+                    $post['year'] = $year;
+                    $post['month'] = $month;
+                    return $post;
+                }
             }
         }
+    }
 
+    return null;
+}
+
+/**
+ * Get the base path for a post's assets
+ */
+function getPostBasePath($post) {
+    if (empty($post['year']) || empty($post['month']) || empty($post['slug'])) {
+        return '/posts/' . ($post['slug'] ?? '');
+    }
+    return '/posts/' . $post['year'] . '/' . $post['month'] . '/' . $post['slug'];
+}
+
+/**
+ * Format content HTML and process media markers
+ *
+ * Markers supported:
+ * - {{image:filename.jpg}} or {{image:filename.jpg|alt text}}
+ * - {{youtube:VIDEO_ID}}
+ */
+function formatContentHtml($content, $post = null) {
+    $basePath = $post ? getPostBasePath($post) : '';
+
+    // Process image markers: {{image:file.jpg}} or {{image:file.jpg|alt text}}
+    $content = preg_replace_callback(
+        '/\{\{image:([^}|]+)(?:\|([^}]*))?\}\}/',
+        function($matches) use ($basePath) {
+            $filename = trim($matches[1]);
+            $alt = isset($matches[2]) ? htmlspecialchars(trim($matches[2]), ENT_QUOTES, 'UTF-8') : '';
+
+            $src = $basePath ? "$basePath/$filename" : $filename;
+            $src = htmlspecialchars($src, ENT_QUOTES, 'UTF-8');
+
+            return '<img src="' . $src . '" alt="' . $alt . '" class="inline-image">';
+        },
+        $content
+    );
+
+    // Process YouTube markers: {{youtube:VIDEO_ID}}
+    $content = preg_replace_callback(
+        '/\{\{youtube:([a-zA-Z0-9_-]+)\}\}/',
+        function($matches) {
+            $videoId = htmlspecialchars($matches[1], ENT_QUOTES, 'UTF-8');
+            return '<div class="video-embed">'
+                . '<iframe src="https://www.youtube.com/embed/' . $videoId . '" '
+                . 'frameborder="0" allowfullscreen '
+                . 'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">'
+                . '</iframe></div>';
+        },
+        $content
+    );
+
+    return $content;
+}
+
+/**
+ * Get hero image URL for a post
+ */
+function getHeroImageUrl($post) {
+    if (empty($post['hero_image'])) {
         return null;
-    } catch (PDOException $e) {
-        error_log("Blog fetch by slug error: " . $e->getMessage());
-        return null;
     }
-}
-
-function addBlogPost($title, $content) {
-    $db = getDB();
-    if (!$db) {
-        return false;
-    }
-
-    try {
-        ensureBlogTable($db);
-
-        $title = trim($title);
-        $content = trim($content);
-
-        if (empty($title) || empty($content)) {
-            return false;
-        }
-
-        if (strlen($title) > 200) {
-            return false;
-        }
-
-        $stmt = $db->prepare("INSERT INTO blog_posts (title, content) VALUES (:title, :content)");
-        $stmt->bindParam(':title', $title, PDO::PARAM_STR);
-        $stmt->bindParam(':content', $content, PDO::PARAM_STR);
-        $stmt->execute();
-
-        return true;
-    } catch (PDOException $e) {
-        error_log("Blog insert error: " . $e->getMessage());
-        return false;
-    }
-}
-
-function isBlogAdmin() {
-    // Counter.php starts the session earlier in the request
-    $envKey = getenv('BLOG_ADMIN_KEY') ?: '';
-    if (!$envKey) {
-        return false;
-    }
-
-    if (!empty($_SESSION['blog_admin']) && $_SESSION['blog_admin'] === true) {
-        return true;
-    }
-
-    if (!isset($_POST['admin_key'])) {
-        return false;
-    }
-
-    $provided = trim($_POST['admin_key']);
-
-    if ($provided !== '' && hash_equals($envKey, $provided)) {
-        $_SESSION['blog_admin'] = true;
-        return true;
-    }
-
-    return false;
-}
-
-function formatContentHtml($content) {
-    $paragraphs = preg_split('/\\R{2,}/', trim($content));
-    $html = '';
-
-    foreach ($paragraphs as $para) {
-        $para = trim($para);
-        if ($para === '') {
-            continue;
-        }
-        $placeholders = [];
-        $idx = 0;
-
-        // Convert markdown-style images ![alt](src) into HTML while escaping the rest
-        $para = preg_replace_callback('/!\\[([^\\]]*)\\]\\(([^)]+)\\)/', function ($m) use (&$placeholders, &$idx) {
-            $key = "%%IMG{$idx}%%";
-            $src = htmlspecialchars($m[2], ENT_QUOTES, 'UTF-8');
-            $alt = htmlspecialchars($m[1], ENT_QUOTES, 'UTF-8');
-            $placeholders[$key] = '<img src="' . $src . '" alt="' . $alt . '" class="inline-image">';
-            $idx++;
-            return $key;
-        }, $para);
-
-        $escaped = nl2br(htmlspecialchars($para, ENT_QUOTES, 'UTF-8'));
-        if (!empty($placeholders)) {
-            $escaped = str_replace(array_keys($placeholders), array_values($placeholders), $escaped);
-        }
-
-        $html .= '<p>' . $escaped . '</p>';
-    }
-
-    return $html;
+    return getPostBasePath($post) . '/' . $post['hero_image'];
 }

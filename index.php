@@ -109,6 +109,17 @@ $blog_posts_by_year = getBlogPostsByYear();
                 $platformSelect.on('change', updateHandleInput);
                 updateHandleInput(); // Initialize on page load
             }
+
+            // Toggle guestbook form visibility
+            var $toggleBtn = $('#toggleGuestbookForm');
+            var $formWrapper = $('#guestbookFormWrapper');
+            var isFormOpen = false;
+
+            $toggleBtn.on('click', function() {
+                isFormOpen = !isFormOpen;
+                $formWrapper.slideToggle(300);
+                $toggleBtn.text(isFormOpen ? '− Close' : '+ Create Entry');
+            });
         });
     </script>
 </head>
@@ -120,7 +131,7 @@ $blog_posts_by_year = getBlogPostsByYear();
         <?php if (!$is_single_post_view): ?>
             <div class="bio-section">
                 <p class="bio-text">
-                   Welcome to my super awesome website. I'm sharing insights, thoughts, learings and general opinions about the space of software engineering and life in general. Subsribe to my super aweseome newsletter to get the latest updates and insights directly in your inbox.
+                    Welcome to my personal blog. I'm sharing insights, thoughts, learings and general opinions about the space of software engineering and life in general. Subsribe to my super aweseome newsletter to get the latest updates and insights directly in your inbox.
                 </p>
             </div>
         <?php endif; ?>
@@ -133,7 +144,7 @@ $blog_posts_by_year = getBlogPostsByYear();
 
             <?php if ($is_single_post_view): ?>
                 <?php if ($single_post): ?>
-                    <?php $single_slug = slugifyTitle($single_post['title']); ?>
+                    <?php $single_slug = $single_post['slug']; ?>
                     <article class="blog-single">
                         <div class="single-header">
                             <h1 class="single-title">
@@ -143,12 +154,12 @@ $blog_posts_by_year = getBlogPostsByYear();
                             </h1>
                             <span class="single-date"><?php echo formatDateDateOnly($single_post['created_at']); ?></span>
                         </div>
-                        <?php if (!empty($single_post['image_url'])): ?>
+                        <?php $heroUrl = getHeroImageUrl($single_post); if ($heroUrl): ?>
                             <div class="single-hero">
-                                <img src="<?php echo htmlspecialchars($single_post['image_url']); ?>" alt="<?php echo htmlspecialchars($single_post['title']); ?>">
+                                <img src="<?php echo htmlspecialchars($heroUrl); ?>" alt="<?php echo htmlspecialchars($single_post['title']); ?>">
                             </div>
                         <?php endif; ?>
-                        <div class="blog-content single-body"><?php echo formatContentHtml($single_post['content']); ?></div>
+                        <div class="blog-content single-body"><?php echo formatContentHtml($single_post['content'], $single_post); ?></div>
                         <div class="blog-back-link">
                             <a href="/#blog">← Back to all posts</a>
                         </div>
@@ -168,7 +179,7 @@ $blog_posts_by_year = getBlogPostsByYear();
                                     <?php foreach ($posts as $post): ?>
                                         <div class="blog-list-item">
                                             <span class="blog-date-inline"><?php echo htmlspecialchars(formatDateShort($post['created_at'])); ?></span>
-                                            <a class="blog-title-link" href="/blog/<?php echo htmlspecialchars(slugifyTitle($post['title'])); ?>">
+                                            <a class="blog-title-link" href="/blog/<?php echo htmlspecialchars($post['slug']); ?>">
                                                 <?php echo htmlspecialchars($post['title']); ?>
                                             </a>
                                         </div>
@@ -203,7 +214,52 @@ $blog_posts_by_year = getBlogPostsByYear();
         <?php if (!$is_single_post_view): ?>
             <div class="guestbook-section">
                 <div class="entries-container">
-                    <h2>Guest Book</h2>
+                    <div class="guestbook-header">
+                        <h2>Guest Book</h2>
+                        <button type="button" class="create-entry-btn" id="toggleGuestbookForm">+ Create Entry</button>
+                    </div>
+
+                    <div class="guestbook-form-wrapper" id="guestbookFormWrapper">
+                        <?php if ($message): ?>
+                            <div class="message <?php echo htmlspecialchars($message_type); ?>">
+                                <?php echo htmlspecialchars($message); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <form method="POST" action="" class="guestbook-form">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name" name="name" required maxlength="100" placeholder="Your name">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message:</label>
+                                <textarea id="message" name="message" required maxlength="1000" rows="4" placeholder="Leave a message..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="website">Website (optional):</label>
+                                <input type="url" id="website" name="website" maxlength="255" placeholder="https://example.com">
+                            </div>
+                            <div class="form-group social-media-group">
+                                <label for="social_media_platform">Social Media (optional):</label>
+                                <div class="social-media-inputs">
+                                    <select id="social_media_platform" name="social_media_platform" class="social-platform-select">
+                                        <option value="">None</option>
+                                        <option value="x">X</option>
+                                        <option value="instagram">Instagram</option>
+                                        <option value="github">GitHub</option>
+                                        <option value="linkedin">LinkedIn</option>
+                                        <option value="youtube">YouTube</option>
+                                        <option value="tiktok">TikTok</option>
+                                        <option value="facebook">Facebook</option>
+                                        <option value="reddit">Reddit</option>
+                                        <option value="discord">Discord</option>
+                                    </select>
+                                    <input type="text" id="social_media_handle" name="social_media_handle" maxlength="100" placeholder="@username" class="social-handle-input">
+                                </div>
+                            </div>
+                            <button type="submit" name="submit_entry" class="submit-btn">Sign Guestbook</button>
+                        </form>
+                    </div>
                     <?php if (empty($entries)): ?>
                         <p class="no-entries">No entries yet. Be the first to sign!</p>
                     <?php else: ?>
@@ -241,47 +297,6 @@ $blog_posts_by_year = getBlogPostsByYear();
                     <?php endif; ?>
                 </div>
 
-                <h3>Create an entry right below!</h3>
-
-                <?php if ($message): ?>
-                    <div class="message <?php echo htmlspecialchars($message_type); ?>">
-                        <?php echo htmlspecialchars($message); ?>
-                    </div>
-                <?php endif; ?>
-
-                <form method="POST" action="" class="guestbook-form">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required maxlength="100" placeholder="Your name">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message:</label>
-                        <textarea id="message" name="message" required maxlength="1000" rows="4" placeholder="Leave a message..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="website">Website (optional):</label>
-                        <input type="url" id="website" name="website" maxlength="255" placeholder="https://example.com">
-                    </div>
-                    <div class="form-group social-media-group">
-                        <label for="social_media_platform">Social Media (optional):</label>
-                        <div class="social-media-inputs">
-                            <select id="social_media_platform" name="social_media_platform" class="social-platform-select">
-                                <option value="">None</option>
-                                <option value="x">X</option>
-                                <option value="instagram">Instagram</option>
-                                <option value="github">GitHub</option>
-                                <option value="linkedin">LinkedIn</option>
-                                <option value="youtube">YouTube</option>
-                                <option value="tiktok">TikTok</option>
-                                <option value="facebook">Facebook</option>
-                                <option value="reddit">Reddit</option>
-                                <option value="discord">Discord</option>
-                            </select>
-                            <input type="text" id="social_media_handle" name="social_media_handle" maxlength="100" placeholder="@username" class="social-handle-input">
-                        </div>
-                    </div>
-                    <button type="submit" name="submit_entry" class="submit-btn">Sign Guestbook</button>
-                </form>
             </div>
         <?php endif; ?>
     </div>
@@ -289,7 +304,7 @@ $blog_posts_by_year = getBlogPostsByYear();
     <?php if (!$is_single_post_view): ?>
         <div class="corner-box x-profile">
             <a href="https://x.com/julianfaalk" target="_blank" rel="noopener noreferrer">
-                <span>Follow me</span>
+                <span>I'm on</span>
                 <svg class="x-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>

@@ -43,14 +43,6 @@ function getDB() {
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )");
 
-        // Create blog table if it doesn't exist
-        $db->exec("CREATE TABLE IF NOT EXISTS blog_posts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            content TEXT NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        )");
-        
         return $db;
     } catch (PDOException $e) {
         error_log("DB Error: " . $e->getMessage());

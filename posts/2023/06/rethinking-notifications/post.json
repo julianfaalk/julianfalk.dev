@@ -1,0 +1,5 @@
+{
+    "title": "Rethinking notifications",
+    "created_at": "2023-06-02 10:40:00",
+    "content": "<p>I killed most push notifications and kept only three: payment failures, deploy failures, and uptime checks. Everything else moved to a digest.</p>\n\n<p>The result: I respond faster to real problems and ignore the rest without guilt. Users benefit because the product evolves instead of being tuned to notification noise.</p>\n\n<p>Attention is the scarce resource; the code now respects that.</p>"
+}

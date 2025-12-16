@@ -1,0 +1,5 @@
+{
+    "title": "Static hosting drills",
+    "created_at": "2023-02-19 09:05:00",
+    "content": "<p>I practiced moving the site between hosts in under an hour. Assets live in a bucket, HTML is portable, and SQLite moves as a single file.</p>\n\n<p>Each drill surfaces one snag DNS TTLs, SSL renewals, or a script that assumed a path. Fixing them ahead of time means real incidents stay boring.</p>\n\n<p>Portability keeps me calm: if a server misbehaves, I redeploy elsewhere and keep rolling.</p>"
+}

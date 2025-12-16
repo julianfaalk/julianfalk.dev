@@ -1,0 +1,5 @@
+{
+    "title": "Moving the blog to SQLite",
+    "created_at": "2022-11-08 12:15:00",
+    "content": "<p>Switching the blog to SQLite collapsed the stack to a single file. Backups became file copies, migrations became schema checks, and deployments became simpler.</p>\n\n<p>Performance improved because reads are local and writes are predictable. I monitor the WAL size and vacuum occasionally to keep things tidy.</p>\n\n<p>This change also reduced costs: no managed DB, no networking egress surprises.</p>"
+}

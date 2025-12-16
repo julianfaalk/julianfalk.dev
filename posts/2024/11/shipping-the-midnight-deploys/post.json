@@ -1,0 +1,5 @@
+{
+    "title": "Shipping the midnight deploys",
+    "created_at": "2024-11-12 10:00:00",
+    "content": "<p>Late-night deploys force me to prune scope to only the essentials. I run through a tighter checklist, slice stories down to single responsibility, and leave feature flags on by default so rollbacks are instant.</p>\n\n<p>The surprise benefit is clarity: every log line and metric tells a smaller story when I ship one change at a time. I wake up to fewer alerts, shorter diffs, and less guessing about what moved the needle.</p>\n\n<p>This cadence also keeps me honest about recovery plans. Backups, migrations, and cache warmers get rehearsed weekly instead of sitting as theoretical exercises.</p>"
+}

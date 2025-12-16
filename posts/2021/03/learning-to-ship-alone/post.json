@@ -1,0 +1,5 @@
+{
+    "title": "Learning to ship alone",
+    "created_at": "2021-03-12 08:10:00",
+    "content": "<p>Shipping solo means picking constraints that remove excuses. I chose a stack I can run locally, deploy in minutes, and debug with basic tools.</p>\n\n<p>That mindset reduced procrastination. Instead of researching tooling, I wrote copy, designed flows, and pushed to production.</p>\n\n<p>The habit of small, frequent releases started here and continues to pay off.</p>"
+}
