@@ -267,7 +267,7 @@ $blog_posts_by_year = getBlogPostsByYear();
         </div>
 
         <div class="corner-box counter">
-            Visitors: <?php echo number_format($visitor_count); ?>
+             <?php echo number_format($visitor_count); ?> people visited
         </div>
     <?php endif; ?>
 </body>
