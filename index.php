@@ -82,7 +82,8 @@ $blog_posts_by_year = getBlogPostsByYear();
 $base_url = 'https://www.julianfalk.dev';
 if ($is_single_post_view && $single_post) {
     $seo_title = $single_post['title'] . ' | Julian Falk';
-    $seo_description = mb_substr(strip_tags($single_post['content']), 0, 155) . '...';
+    $plain_content = strip_tags($single_post['content']);
+    $seo_description = substr($plain_content, 0, 155) . '...';
     $seo_canonical = $base_url . '/blog/' . $single_post['slug'];
     $seo_type = 'article';
     $hero_url = getHeroImageUrl($single_post);
