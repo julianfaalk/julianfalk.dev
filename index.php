@@ -318,6 +318,10 @@ if ($is_single_post_view && $single_post) {
                                         <span class="entry-date"><?php echo formatDate($entry['created_at']); ?></span>
                                     </div>
                                     <div class="entry-message"><?php echo nl2br(htmlspecialchars($entry['message'])); ?></div>
+                                    <button type="button" class="entry-more-btn">
+                                        <span>more</span>
+                                        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                                    </button>
                                 </div>
                             <?php endforeach; ?>
                         </div>

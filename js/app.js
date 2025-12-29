@@ -11,6 +11,9 @@ $(function() {
 
     // Show more entries toggle
     initShowMoreEntries();
+
+    // Entry message expand toggle
+    initEntryMessageExpand();
 });
 
 /**
@@ -83,6 +86,29 @@ function initShowMoreEntries() {
         $entriesList.toggleClass('expanded', isExpanded);
         $showMoreBtn.toggleClass('expanded', isExpanded);
         $showMoreBtn.find('.show-more-text').text(isExpanded ? 'Show less' : originalText);
+    });
+}
+
+/**
+ * Initialize entry message expand/collapse
+ * Shows "more" button only for messages that overflow
+ */
+function initEntryMessageExpand() {
+    $('.entry-message').each(function() {
+        var $message = $(this);
+        var $btn = $message.next('.entry-more-btn');
+
+        // Check if content overflows
+        if (this.scrollHeight > this.clientHeight) {
+            $btn.addClass('visible');
+
+            $btn.on('click', function() {
+                var isExpanded = $message.hasClass('expanded');
+                $message.toggleClass('expanded');
+                $btn.toggleClass('expanded');
+                $btn.find('span').text(isExpanded ? 'more' : 'less');
+            });
+        }
     });
 }
 

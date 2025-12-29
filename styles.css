@@ -1350,6 +1350,47 @@ h3 {
     line-height: 1.6;
     white-space: pre-wrap;
     word-wrap: break-word;
+    max-height: 8em; /* ~5 lines */
+    overflow: hidden;
+    position: relative;
+}
+
+.entry-message.expanded {
+    max-height: none;
+}
+
+.entry-more-btn {
+    display: none;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+    padding: 0;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    transition: color 0.2s ease;
+}
+
+.entry-more-btn.visible {
+    display: inline-flex;
+}
+
+.entry-more-btn:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.entry-more-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    transition: transform 0.2s ease;
+}
+
+.entry-more-btn.expanded svg {
+    transform: rotate(180deg);
 }
 
 .social-icon-link {
