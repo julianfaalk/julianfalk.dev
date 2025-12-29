@@ -11,9 +11,6 @@ $(function() {
 
     // Show more entries toggle
     initShowMoreEntries();
-
-    // Message truncation
-    initMessageTruncation();
 });
 
 /**
@@ -89,31 +86,3 @@ function initShowMoreEntries() {
     });
 }
 
-/**
- * Initialize message truncation for long guestbook entries
- * Expands truncated messages when "Read more" is clicked
- */
-function initMessageTruncation() {
-    $('.entry-message.truncated').each(function() {
-        var $message = $(this);
-        var $textSpan = $message.find('.message-text');
-        var $expandBtn = $message.find('.entry-expand-btn');
-        var fullMessage = $message.data('full-message');
-        var truncatedHtml = $textSpan.html();
-
-        $expandBtn.on('click', function() {
-            var isExpanded = $message.hasClass('expanded');
-            if (isExpanded) {
-                // Collapse back
-                $textSpan.html(truncatedHtml);
-                $expandBtn.text('Read more');
-                $message.removeClass('expanded');
-            } else {
-                // Expand to full
-                $textSpan.html(fullMessage.replace(/\n/g, '<br>'));
-                $expandBtn.text('Show less');
-                $message.addClass('expanded');
-            }
-        });
-    });
-}

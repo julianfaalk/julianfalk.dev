@@ -1352,27 +1352,6 @@ h3 {
     word-wrap: break-word;
 }
 
-.message-text {
-    white-space: pre-wrap;
-}
-
-.entry-expand-btn {
-    display: inline;
-    margin-left: 0.25rem;
-    padding: 0;
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: inherit;
-    cursor: pointer;
-    font-family: inherit;
-    transition: color 0.2s ease;
-}
-
-.entry-expand-btn:hover {
-    color: rgba(255, 255, 255, 0.8);
-}
-
 .social-icon-link {
     display: inline-flex;
     align-items: center;

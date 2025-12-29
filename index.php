@@ -317,18 +317,7 @@ if ($is_single_post_view && $single_post) {
                                         </div>
                                         <span class="entry-date"><?php echo formatDate($entry['created_at']); ?></span>
                                     </div>
-                                    <?php
-                                    $message = $entry['message'];
-                                    $max_chars = 280;
-                                    $is_truncated = mb_strlen($message) > $max_chars;
-                                    $display_message = $is_truncated ? mb_substr($message, 0, $max_chars) : $message;
-                                    ?>
-                                    <div class="entry-message<?php echo $is_truncated ? ' truncated' : ''; ?>"
-                                        <?php if ($is_truncated): ?>data-full-message="<?php echo htmlspecialchars($message); ?>"<?php endif; ?>>
-                                        <span class="message-text"><?php echo nl2br(htmlspecialchars($display_message)); ?><?php if ($is_truncated): ?>...</span>
-                                        <button type="button" class="entry-expand-btn">Read more</button>
-                                        <?php else: ?></span><?php endif; ?>
-                                    </div>
+                                    <div class="entry-message"><?php echo nl2br(htmlspecialchars($entry['message'])); ?></div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
