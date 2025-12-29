@@ -1227,6 +1227,55 @@ h3 {
     gap: 1rem;
 }
 
+/* Hidden entries (collapsed state) */
+.entry-hidden {
+    display: none;
+}
+
+.entries-list.expanded .entry-hidden {
+    display: block;
+}
+
+/* Show more button */
+.show-more-entries-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    font-family: 'Share Tech Mono', monospace;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.show-more-entries-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
+
+.show-more-entries-btn:active {
+    transform: scale(0.98);
+}
+
+.show-more-arrow {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: transform 0.3s ease;
+}
+
+.show-more-entries-btn.expanded .show-more-arrow {
+    transform: rotate(180deg);
+}
+
 .entry {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1301,6 +1350,27 @@ h3 {
     line-height: 1.6;
     white-space: pre-wrap;
     word-wrap: break-word;
+}
+
+.message-text {
+    white-space: pre-wrap;
+}
+
+.entry-expand-btn {
+    display: inline;
+    margin-left: 0.25rem;
+    padding: 0;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.2s ease;
+}
+
+.entry-expand-btn:hover {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .social-icon-link {

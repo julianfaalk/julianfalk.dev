@@ -285,9 +285,14 @@ if ($is_single_post_view && $single_post) {
                     <?php if (empty($entries)): ?>
                         <p class="no-entries">No entries yet. Be the first to sign!</p>
                     <?php else: ?>
+                        <?php
+                        $visible_limit = 5;
+                        $total_entries = count($entries);
+                        $has_more = $total_entries > $visible_limit;
+                        ?>
                         <div class="entries-list">
-                            <?php foreach ($entries as $entry): ?>
-                                <div class="entry">
+                            <?php foreach ($entries as $index => $entry): ?>
+                                <div class="entry<?php echo $index >= $visible_limit ? ' entry-hidden' : ''; ?>">
                                     <div class="entry-header">
                                         <div class="entry-name-section">
                                             <?php if (!empty($entry['website'])): ?>
@@ -312,10 +317,29 @@ if ($is_single_post_view && $single_post) {
                                         </div>
                                         <span class="entry-date"><?php echo formatDate($entry['created_at']); ?></span>
                                     </div>
-                                    <div class="entry-message"><?php echo nl2br(htmlspecialchars($entry['message'])); ?></div>
+                                    <?php
+                                    $message = $entry['message'];
+                                    $max_chars = 280;
+                                    $is_truncated = mb_strlen($message) > $max_chars;
+                                    $display_message = $is_truncated ? mb_substr($message, 0, $max_chars) : $message;
+                                    ?>
+                                    <div class="entry-message<?php echo $is_truncated ? ' truncated' : ''; ?>"
+                                        <?php if ($is_truncated): ?>data-full-message="<?php echo htmlspecialchars($message); ?>"<?php endif; ?>>
+                                        <span class="message-text"><?php echo nl2br(htmlspecialchars($display_message)); ?><?php if ($is_truncated): ?>...</span>
+                                        <button type="button" class="entry-expand-btn">Read more</button>
+                                        <?php else: ?></span><?php endif; ?>
+                                    </div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
+                        <?php if ($has_more): ?>
+                            <button type="button" class="show-more-entries-btn" id="showMoreEntries">
+                                <span class="show-more-text">Show <?php echo $total_entries - $visible_limit; ?> more</span>
+                                <svg class="show-more-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                                </svg>
+                            </button>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
 

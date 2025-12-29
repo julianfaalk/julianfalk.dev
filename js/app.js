@@ -8,6 +8,12 @@ $(function() {
 
     // Guestbook form toggle
     initGuestbookFormToggle();
+
+    // Show more entries toggle
+    initShowMoreEntries();
+
+    // Message truncation
+    initMessageTruncation();
 });
 
 /**
@@ -60,4 +66,54 @@ function triggerWelcomeCelebration() {
     if (container && typeof Confetti !== 'undefined') {
         Confetti.launch(container, { particleCount: 50 });
     }
+}
+
+/**
+ * Initialize show more entries toggle
+ * Expands/collapses hidden guestbook entries
+ */
+function initShowMoreEntries() {
+    var $showMoreBtn = $('#showMoreEntries');
+    var $entriesList = $('.entries-list');
+
+    if (!$showMoreBtn.length || !$entriesList.length) return;
+
+    var isExpanded = false;
+    var originalText = $showMoreBtn.find('.show-more-text').text();
+
+    $showMoreBtn.on('click', function() {
+        isExpanded = !isExpanded;
+        $entriesList.toggleClass('expanded', isExpanded);
+        $showMoreBtn.toggleClass('expanded', isExpanded);
+        $showMoreBtn.find('.show-more-text').text(isExpanded ? 'Show less' : originalText);
+    });
+}
+
+/**
+ * Initialize message truncation for long guestbook entries
+ * Expands truncated messages when "Read more" is clicked
+ */
+function initMessageTruncation() {
+    $('.entry-message.truncated').each(function() {
+        var $message = $(this);
+        var $textSpan = $message.find('.message-text');
+        var $expandBtn = $message.find('.entry-expand-btn');
+        var fullMessage = $message.data('full-message');
+        var truncatedHtml = $textSpan.html();
+
+        $expandBtn.on('click', function() {
+            var isExpanded = $message.hasClass('expanded');
+            if (isExpanded) {
+                // Collapse back
+                $textSpan.html(truncatedHtml);
+                $expandBtn.text('Read more');
+                $message.removeClass('expanded');
+            } else {
+                // Expand to full
+                $textSpan.html(fullMessage.replace(/\n/g, '<br>'));
+                $expandBtn.text('Show less');
+                $message.addClass('expanded');
+            }
+        });
+    });
 }
