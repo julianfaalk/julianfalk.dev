@@ -341,7 +341,7 @@ if ($is_single_post_view && $single_post) {
 
     <footer class="site-footer">
         <div class="footer-content">
-            <h4 class="footer-title">Porjects</h4>
+            <h4 class="footer-title">Projects</h4>
             <ul class="footer-links">
                 <li><a href="https://nebenkostenpro.de/" target="_blank" rel="noopener noreferrer">Nebenkostenpro</a></li>
                 <!-- <li><a href="https://falksoftware.com/" target="_blank" rel="noopener noreferrer">Falk Software</a></li> -->
