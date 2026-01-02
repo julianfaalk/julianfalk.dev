@@ -188,7 +188,7 @@ if ($is_single_post_view && $single_post) {
 
             <div class="blog-intro">
                 <h3 class="blog-intro-title">Blog</h3>
-                <p class="blog-intro-text">Thoughts on building products, software engineering, and life.</p>
+                <!-- <p class="blog-intro-text">Thoughts on building products, software engineering, and life.</p> -->
             </div>
         <?php endif; ?>
 
