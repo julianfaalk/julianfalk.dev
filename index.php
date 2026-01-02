@@ -181,7 +181,7 @@ if ($is_single_post_view && $single_post) {
                     </a>
                     <a href="https://postamt.julianfalk.dev/" target="_blank" rel="noopener noreferrer" class="project-card">
                         <span class="project-name">Postamt.ai</span>
-                        <span class="project-desc">AI-powered email assistant</span>
+                        <span class="project-desc">AI-powered social media management</span>
                     </a>
                 </div>
             </div>
