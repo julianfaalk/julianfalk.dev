@@ -384,7 +384,7 @@ if ($is_single_post_view && $single_post) {
         </div>
 
         <div class="corner-box counter">
-             <?php echo number_format($visitor_count); ?> people visited
+             ✨ <?php echo number_format($visitor_count); ?> people visited
         </div>
     <?php endif; ?>
 
