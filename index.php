@@ -170,7 +170,6 @@ if ($is_single_post_view && $single_post) {
             </div>
         <?php endif; ?>
 
-        <?php /* BLOG SECTION COMMENTED OUT
         <div class="blog-section" id="blog">
             <!-- <div class="section-header">
                 <h2>Blog</h2>
@@ -233,9 +232,9 @@ if ($is_single_post_view && $single_post) {
                 </div>
             <?php endif; ?>
         </div>
-        END BLOG SECTION */ ?>
 
         <?php if (!$is_single_post_view): ?>
+            <?php /* GUESTBOOK SECTION COMMENTED OUT
             <div class="guestbook-section">
                 <div class="entries-container">
                     <div class="guestbook-header">
@@ -339,6 +338,7 @@ if ($is_single_post_view && $single_post) {
                 </div>
 
             </div>
+            END GUESTBOOK SECTION */ ?>
         <?php endif; ?>
     </div>
 
