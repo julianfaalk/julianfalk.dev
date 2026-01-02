@@ -168,7 +168,7 @@ if ($is_single_post_view && $single_post) {
             <div class="hero-section">
                 <!-- <h2 class="hero-title">Software Engineer & Builder</h2> -->
                 <p class="hero-text">
-                    I build products, write code, and share what I learn along the way. Currently working on multiple ventures in the SaaS and AI space.
+                    I build products, write code, and share what I learn along the way. Currently working on ventures in the SaaS and AI space.
                 </p>
             </div>
 
