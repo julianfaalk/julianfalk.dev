@@ -144,7 +144,9 @@ if ($is_single_post_view && $single_post) {
             "name": "Julian Falk",
             "url": "https://www.julianfalk.dev",
             "sameAs": [
-                "https://x.com/julianfaalk"
+                "https://x.com/julianfaalk",
+                "https://unsplash.com/@julianfalk",
+                "https://github.com/julianfalk"
             ]
         }
     }
@@ -163,10 +165,30 @@ if ($is_single_post_view && $single_post) {
         <h1><a class="site-title-link" href="/#blog">julianfalk.dev</a></h1>
 
         <?php if (!$is_single_post_view): ?>
-            <div class="bio-section">
-                <p class="bio-text">
-                    Welcome to my little website. Here I'm sharing insights, thoughts, learings and general opinions about software engineering and life in general. Subsribe to my super aweseome newsletter to get the latest updates and insights directly in your inbox.
+            <div class="hero-section">
+                <h2 class="hero-title">Software Engineer & Builder</h2>
+                <p class="hero-text">
+                    I build products, write code, and share what I learn along the way. Currently working on multiple ventures in the SaaS and AI space.
                 </p>
+            </div>
+
+            <div class="projects-section">
+                <h3 class="projects-title">Current Projects</h3>
+                <div class="projects-grid">
+                    <a href="https://nebenkostenpro.de/" target="_blank" rel="noopener noreferrer" class="project-card">
+                        <span class="project-name">Nebenkostenpro</span>
+                        <span class="project-desc">Utility cost management for German landlords</span>
+                    </a>
+                    <a href="https://postamt.julianfalk.dev/" target="_blank" rel="noopener noreferrer" class="project-card">
+                        <span class="project-name">Postamt.ai</span>
+                        <span class="project-desc">AI-powered email assistant</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="blog-intro">
+                <h3 class="blog-intro-title">Blog</h3>
+                <p class="blog-intro-text">Thoughts on building products, software engineering, and life.</p>
             </div>
         <?php endif; ?>
 
@@ -343,13 +365,21 @@ if ($is_single_post_view && $single_post) {
     </div>
 
     <?php if (!$is_single_post_view): ?>
-        <div class="corner-box x-profile">
-            <a href="https://x.com/julianfaalk" target="_blank" rel="noopener noreferrer">
-                <span>I'm on</span>
-                <svg class="x-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <div class="social-links-bar">
+            <a href="https://x.com/julianfaalk" target="_blank" rel="noopener noreferrer" class="social-link" title="X (Twitter)">
+                <svg class="social-icon-bar" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
-                <span>@julianfaalk</span>
+            </a>
+            <a href="https://unsplash.com/@julianfalk" target="_blank" rel="noopener noreferrer" class="social-link" title="Unsplash">
+                <svg class="social-icon-bar" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.5 6.75V0h9v6.75h-9zm9 3.75H24V24H0V10.5h7.5v6.75h9V10.5z"/>
+                </svg>
+            </a>
+            <a href="https://github.com/julianfalk" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+                <svg class="social-icon-bar" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
             </a>
         </div>
 
@@ -360,11 +390,7 @@ if ($is_single_post_view && $single_post) {
 
     <footer class="site-footer">
         <div class="footer-content">
-            <h4 class="footer-title">Projects</h4>
-            <ul class="footer-links">
-                <li><a href="https://nebenkostenpro.de/" target="_blank" rel="noopener noreferrer">Nebenkostenpro</a></li>
-                <li><a href="https://postamt.julianfalk.dev/" target="_blank" rel="noopener noreferrer">Postamt.ai</a></li>
-            </ul>
+            <span class="footer-copy">&copy; <?php echo date('Y'); ?> Julian Falk</span>
         </div>
     </footer>
 
