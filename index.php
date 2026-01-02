@@ -146,7 +146,7 @@ if ($is_single_post_view && $single_post) {
             "sameAs": [
                 "https://x.com/julianfaalk",
                 "https://unsplash.com/@julianfalk",
-                "https://github.com/julianfalk"
+                "https://github.com/julianfaalk"
             ]
         }
     }
